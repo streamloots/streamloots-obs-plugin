@@ -32,7 +32,6 @@ endif()
 
 find_package(LibObs REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
-find_package(cpprestsdk REQUIRED)
 
 configure_file(
     src/plugin-macros.h.in
@@ -77,7 +76,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 	Qt5::Widgets
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE cpprestsdk::cpprest)
 
 # --- End of section ---
 
