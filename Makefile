@@ -44,7 +44,6 @@ prepare-windows:
 	SET "QTDIR32=$(QTDIR32)" && \
 	SET "QTDIR64=$(QTDIR64)" && \
 	SET "OBSPath=$(OBSPath)" && \
-	SET "cpprestsdk_DIR=$(RESTSDKPath)" && \
 	ci\windows\prepare-windows.cmd
 
 build-plugin-32:
