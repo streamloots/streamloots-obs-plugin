@@ -2,18 +2,18 @@ cmake_minimum_required(VERSION 3.10)
 
 # Change obs-plugintemplate to your plugin's name in a machine-readable format
 # (e.g.: obs-myawesomeplugin) and set 
-project(obs-plugintemplate VERSION 1.0.0)
+project(obs-streamloots VERSION 0.1.0)
 
 # Replace `Your Name Here` with the name (yours or your organization's) you want
 # to see as the author of the plugin (in the plugin's metadata itself and in the installers)
-set(PLUGIN_AUTHOR "Your Name Here")
+set(PLUGIN_AUTHOR "Eslem")
 
 # Replace `com.example.obs-plugin-template` with a unique Bundle ID for macOS releases
 # (used both in the installer and when submitting the installer for notarization)
-set(MACOS_BUNDLEID "com.example.obs-plugintemplate")
+set(MACOS_BUNDLEID "com.streamloots.obs-streamloots")
 
 # Replace `me@contoso.com` with the maintainer email address you want to put in Linux packages
-set(LINUX_MAINTAINER_EMAIL "me@contoso.com")
+set(LINUX_MAINTAINER_EMAIL "eslem@streamloots.com")
 
 # TAKE NOTE: No need to edit things past this point
 
@@ -32,6 +32,7 @@ endif()
 
 find_package(LibObs REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+find_package(cpprestsdk REQUIRED)
 
 configure_file(
     src/plugin-macros.h.in
@@ -75,6 +76,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 	Qt5::Core
 	Qt5::Widgets
 )
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE cpprestsdk::cpprest)
 
 # --- End of section ---
 
