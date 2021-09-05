@@ -11,7 +11,6 @@ DepsPath32 := $(DepsBasePath)\win32
 
 OBSPath:= C:\Users\eslem\Code\Companies\StreamLoots\poc\obs-plugin\deps\obs-studio
 
-RESTSDKPath = C:\Users\eslem\Code\Companies\StreamLoots\poc\obs-plugin\deps\cpprestsdk\Release
 build_config := RelWithDebInfo
 
 msbuild:=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
