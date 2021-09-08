@@ -1,26 +1,31 @@
 PluginName = "Streamloots"
 
-QtBaseDir := C:\Users\eslem\Code\Companies\StreamLoots\poc\obs-plugin\deps\QT
+ROOT_DIR:=${CURDIR}
+
+QtBaseDir := ${CURDIR}\deps\QT
 QTDIR32 := $(QtBaseDir)\5.10.1\msvc2017
 QTDIR64 := $(QtBaseDir)\5.10.1\msvc2017_64
 CMAKE_PREFIX_PATH := $(QTDIR32)\lib\cmake\Qt5Widgets
 
-DepsBasePath := C:\Users\eslem\Code\Companies\StreamLoots\poc\obs-plugin\deps\dependencies2019
-DepsPath64 := $(DepsBasePath)\win64
-DepsPath32 := $(DepsBasePath)\win32
+OBSDepsBasePath := ${CURDIR}\deps\dependencies2019
+DepsPath64 := $(OBSDepsBasePath)\win64
+DepsPath32 := $(OBSDepsBasePath)\win32
 
-OBSPath:= C:\Users\eslem\Code\Companies\StreamLoots\poc\obs-plugin\deps\obs-studio
+OBSPath:=${CURDIR}\deps\obs-studio
 
 build_config := RelWithDebInfo
 
 msbuild:=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
+
+root:
+	echo $(ROOT_DIR)
 
 install-qt:
 	SET "QtBaseDir=$(QtBaseDir)" && \
 	ci\windows\install-qt-win.cmd
 
 download-obs-deps:
-	SET "DepsBasePath=$(DepsBasePath)" && \
+	SET "DepsBasePath=$(OBSDepsBasePath)" && \
 	ci\windows\download-obs-deps.cmd
 
 prepare-obs-windows:
@@ -38,6 +43,13 @@ build-obs-32:
 
 build-obs-64:
 	$(msbuild) /m /p:Configuration=$(build_config) $(OBSPath)\build64\obs-studio.sln
+
+prepare-dependencies:
+	$(MAKE) install-qt
+	$(MAKE) download-obs-deps
+	$(MAKE) prepare-obs-windows
+	$(MAKE) build-obs-32
+	$(MAKE) build-obs-64
 
 prepare-windows:
 	SET "build_config=$(build_config)" && \
@@ -67,9 +79,7 @@ build:
 	$(MAKE) build-plugin-64
 	$(MAKE) package-windows
 
-build-install:
-	$(MAKE) clean
-	$(MAKE) prepare-windows
-	$(MAKE) build-plugin-32
-	$(MAKE) build-plugin-64
+build-package:
+	$(MAKE) build
+	$(MAKE) package-windows
 	

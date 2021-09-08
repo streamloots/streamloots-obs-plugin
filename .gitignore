@@ -11,3 +11,5 @@
 
 # ignore generated files
 *.generated.*
+deps
+!deps/.gitkeep
