@@ -59,12 +59,16 @@ configure_file(
 
 set(PLUGIN_SOURCES
 	src/plugin-main.cpp
-	src/WSServer.cpp
+	src/server/WSServer.cpp
+	src/server/WSRequest.cpp
+	src/use-case/UseCaseManager.cpp
     )
 
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h
-    src/WSServer.h
+    src/server/WSServer.h
+    src/server/WSRequest.h
+    src/use-case/UseCaseManager.h
     )
 
 

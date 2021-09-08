@@ -4,6 +4,9 @@
 #include <QtWidgets/QMainWindow>
 #include <obs-frontend-api.h>
 
+#include "WSRequest.h"
+#include "../plugin-macros.generated.h"
+
 QT_USE_NAMESPACE
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
@@ -98,10 +101,11 @@ void WSServer::onMessage(connection_hdl hdl, server::message_ptr msg)
     // {
     //     create_source();
     // }
-
+    //TODO: return response from process
+   WSRequest::processMessage(msg->get_payload());
     try
     {
-        _server.send(hdl, msg->get_payload(), msg->get_opcode());
+        _server.send(hdl, req, msg->get_opcode());
     }
     catch (websocketpp::exception const &e)
     {

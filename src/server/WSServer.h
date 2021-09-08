@@ -1,8 +1,9 @@
 
 #pragma once
+#include <string>
+#include <QString>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
-#include <QString>
 #include <obs-module.h>
 #include <obs-frontend-api.h>
 
