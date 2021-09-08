@@ -26,6 +26,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_definitions(-DASIO_STANDALONE)
+
 if (WIN32 OR APPLE)
 include(external/FindLibObs.cmake)
 endif()
@@ -56,10 +58,14 @@ configure_file(
 )
 
 set(PLUGIN_SOURCES
-	src/plugin-main.c)
+	src/plugin-main.cpp
+	src/WSServer.cpp
+    )
 
 set(PLUGIN_HEADERS
-	src/plugin-macros.generated.h)
+	src/plugin-macros.generated.h
+    src/WSServer.h
+    )
 
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
@@ -68,6 +74,8 @@ include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
 	${Qt5Core_INCLUDES}
 	${Qt5Widgets_INCLUDES}
+    "/Users/eslem/Code/Companies/StreamLoots/poc/obs-plugin/deps/asio/asio/include"
+    "/Users/eslem/Code/Companies/StreamLoots/poc/obs-plugin/deps/websocketpp"
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
@@ -90,6 +98,8 @@ if(WIN32)
     if (MSVC)
         add_definitions(/MP /d2FH4-)
     endif()
+
+    add_definitions(-D_WEBSOCKETPP_CPP11_STL_)
 
 	if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		set(ARCH_NAME "64bit")
