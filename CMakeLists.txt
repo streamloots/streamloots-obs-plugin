@@ -67,6 +67,10 @@ set(PLUGIN_HEADERS
     src/WSServer.h
     )
 
+
+set(CPPWS_DIR CACHE FILEPATH "CPPWS_DIR library")
+set(ASIO_DIR CACHE FILEPATH "ASIO_DIR library")
+
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
 
@@ -74,8 +78,8 @@ include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
 	${Qt5Core_INCLUDES}
 	${Qt5Widgets_INCLUDES}
-    "/Users/eslem/Code/Companies/StreamLoots/poc/obs-plugin/deps/asio/asio/include"
-    "/Users/eslem/Code/Companies/StreamLoots/poc/obs-plugin/deps/websocketpp"
+    "${ASIO_DIR}/asio/include"
+    "${CPPWS_DIR}"
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
@@ -84,13 +88,12 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 	Qt5::Widgets
 )
 
-
 # --- End of section ---
 
 # --- Windows-specific build settings and tasks ---
 if(WIN32)
 	if(NOT DEFINED OBS_FRONTEND_LIB)
-		set(OBS_FRONTEND_LIB "OBS_FRONTEND_LIB-NOTFOUND" CACHE FILEPATH "OBS frontend library")
+		set(OBS_FRONTEND_LIB "OBS_FRONTEND_LIB-NOTFOUND"  CACHE FILEPATH "OBS frontend library")
 		message(FATAL_ERROR "Could not find OBS Frontend API\'s library !")
 	endif()
 

@@ -1,21 +1,25 @@
 PluginName = "Streamloots"
 
 ROOT_DIR:=${CURDIR}
+DEPS_DIR:=${ROOT_DIR}\deps
 
-QtBaseDir := ${CURDIR}\deps\QT
+QtBaseDir := ${DEPS_DIR}\QT
 QTDIR32 := $(QtBaseDir)\5.10.1\msvc2017
 QTDIR64 := $(QtBaseDir)\5.10.1\msvc2017_64
 CMAKE_PREFIX_PATH := $(QTDIR32)\lib\cmake\Qt5Widgets
 
-OBSDepsBasePath := ${CURDIR}\deps\dependencies2019
+OBSDepsBasePath := ${DEPS_DIR}\dependencies2019
 DepsPath64 := $(OBSDepsBasePath)\win64
 DepsPath32 := $(OBSDepsBasePath)\win32
 
-OBSPath:=${CURDIR}\deps\obs-studio
+OBSPath:=${DEPS_DIR}\obs-studio
+
+CPPWSPath=${DEPS_DIR}\websocketpp
+AsioPath=${DEPS_DIR}\asio
 
 build_config := RelWithDebInfo
 
-msbuild:=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
+msbuild=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
 
 root:
 	echo $(ROOT_DIR)
@@ -44,18 +48,26 @@ build-obs-32:
 build-obs-64:
 	$(msbuild) /m /p:Configuration=$(build_config) $(OBSPath)\build64\obs-studio.sln
 
+prepare-cppws:
+	SET "CPPWSPath=$(CPPWSPath)" && \
+	SET "AsioPath=$(AsioPath)" && \
+	ci\windows\prepare-cppws.cmd
+
 prepare-dependencies:
 	$(MAKE) install-qt
 	$(MAKE) download-obs-deps
 	$(MAKE) prepare-obs-windows
 	$(MAKE) build-obs-32
 	$(MAKE) build-obs-64
+	$(MAKE) prepare-cppws
 
 prepare-windows:
 	SET "build_config=$(build_config)" && \
 	SET "QTDIR32=$(QTDIR32)" && \
 	SET "QTDIR64=$(QTDIR64)" && \
 	SET "OBSPath=$(OBSPath)" && \
+	SET "CPPWSPath=$(CPPWSPath)" && \
+	SET "AsioPath=$(AsioPath)" && \
 	ci\windows\prepare-windows.cmd
 
 build-plugin-32:

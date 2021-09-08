@@ -13,3 +13,4 @@
 *.generated.*
 deps
 !deps/.gitkeep
+package
