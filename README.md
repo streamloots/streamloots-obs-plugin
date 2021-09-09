@@ -25,6 +25,11 @@ More information:  https://obsproject.com/docs/reference-core-objects.html
 - Type requests, metadata, and responses
 - Position in scenece centered
 - Handle port is in use
+- Save current state of scene in case something goes wrong, or to restore after timeout
+
+## Important repos:
+- https://github.com/Palakis/obs-websocket
+- https://github.com/obsproject/obs-studio
 
 ## Introduction
 

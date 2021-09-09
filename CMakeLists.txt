@@ -71,6 +71,8 @@ set(PLUGIN_HEADERS
     src/use-case/UseCaseManager.h
     src/use-case/DisplayImage.h
     src/use-case/RotateCamera.h
+    src/use-case/PressKey.h
+    src/use-case/HideCamera.h
     src/use-case/utils.h
     )
 
