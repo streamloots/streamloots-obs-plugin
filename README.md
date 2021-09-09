@@ -1,5 +1,36 @@
 # OBS Plugin Template
 
+## Folder structure:
+```
+server # files related to server connection and request handler
+use-case # process server request and run the use case
+utils #obs and other utils like timers
+plugin-main.cpp #file that runs obs, setup the server
+
+```
+
+More information:  https://obsproject.com/docs/reference-core-objects.html
+## Important types:
+- obs_scene_t: Represents an scene in obs
+- obs_source_t: Represents a source ( attached or not to obs ), cannot apply transform
+- obs_sceneitem_t: Represents a source attached to an scene, can apply transform operations
+- obs_data_t: Similar to a json, can be ussed for source properties, or pass data.
+
+More information:  https://obsproject.com/docs/reference-core-objects.html
+
+
+## Todo's:
+- Process request each for thread
+- Handle close connection, fix error on obs close
+- Type requests, metadata, and responses
+- Position in scenece centered
+- Handle port is in use
+- Save current state of scene in case something goes wrong, or to restore after timeout
+
+## Important repos:
+- https://github.com/Palakis/obs-websocket
+- https://github.com/obsproject/obs-studio
+
 ## Introduction
 
 This plugin is meant to make it easy to quickstart development of new OBS plugins. It includes:
