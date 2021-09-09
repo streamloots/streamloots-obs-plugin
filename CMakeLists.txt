@@ -69,6 +69,9 @@ set(PLUGIN_HEADERS
     src/server/WSServer.h
     src/server/WSRequest.h
     src/use-case/UseCaseManager.h
+    src/use-case/DisplayImage.h
+    src/use-case/RotateCamera.h
+    src/use-case/utils.h
     )
 
 

@@ -3,9 +3,9 @@
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QMainWindow>
 #include <obs-frontend-api.h>
-
 #include "WSRequest.h"
 #include "../plugin-macros.generated.h"
+#include <QtCore/QString>
 
 QT_USE_NAMESPACE
 using websocketpp::lib::placeholders::_1;
@@ -96,16 +96,10 @@ void WSServer::onOpen(connection_hdl hdl)
 void WSServer::onMessage(connection_hdl hdl, server::message_ptr msg)
 {
     blog(LOG_INFO, "onMessage called with hdl: %s and message %s", hdl.lock().get(), msg->get_payload());
-
-    // if (msg->get_payload() == "possum")
-    // {
-    //     create_source();
-    // }
-    //TODO: return response from process
-   WSRequest::processMessage(msg->get_payload());
+    std::string response = WSRequest::processMessage(msg->get_payload());
     try
     {
-        _server.send(hdl, req, msg->get_opcode());
+        _server.send(hdl, response, msg->get_opcode());
     }
     catch (websocketpp::exception const &e)
     {
