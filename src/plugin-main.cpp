@@ -66,6 +66,7 @@ bool obs_module_load(void)
 {
     blog(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
     obs_frontend_add_event_callback(on_front_loaded, NULL);
+    //TODO: event callback when fron unloaded
 
     return true;
 }
