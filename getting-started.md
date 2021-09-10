@@ -1,5 +1,5 @@
 ## Prepare requirements
-- Install 7z
+- Install 7z and add it to path (required for preparing dependencies)
 - Visual studio 2019 with c++ support
 - Install cmake
 - Install https://jrsoftware.org/ add it to path ( only required to package the plugin)
@@ -45,7 +45,7 @@ For the vscode configuration you can use this settings:
 2. Copy the release folder to your obs instalation ( C:\Program Files\obs-studio )
 3. Run obs
 4. Check the logs Help->Log Files -> View current log
-5. To test the server you need to make a request to the port, similar to:
+5. To test the server you need to make a websocket request to the url `ws://localhost:9006`, similar to:
 ```
 {
     "request-type":"display-image",
