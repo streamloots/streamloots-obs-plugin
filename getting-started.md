@@ -55,5 +55,4 @@ For the vscode configuration you can use this settings:
         "seconds":5
     }
 }
-
 ```
