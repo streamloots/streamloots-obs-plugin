@@ -41,6 +41,4 @@ using OBSDataArrayAutoRelease = OBSRef<obs_data_array_t*, ___data_array_dummy_ad
 using OBSOutputAutoRelease = OBSRef<obs_output_t*, ___output_dummy_addref, obs_output_release>;
 
 
-void create_source();
-
 #endif // PLUGINNAME_H

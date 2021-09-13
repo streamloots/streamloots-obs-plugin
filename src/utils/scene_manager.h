@@ -7,14 +7,6 @@
 #include <iostream>
 #include <QString>
 
-inline obs_source_t *create_img_source()
-{
-    obs_data_t *settings = obs_data_create_from_json("{\"url\":\"https:\/\/i.giphy.com\/media\/MFVI64gIopnOTDeeO9\/giphy.webp\"}");
-
-    obs_source_t *source = obs_source_create("browser_source", "pepitogrillo", settings, NULL);
-    return source;
-}
-
 inline obs_scene_t *get_current_scene()
 {
     obs_source_t *scene_source = obs_frontend_get_current_scene();
@@ -65,19 +57,6 @@ inline obs_sceneitem_t *add_source_to_current_scene(obs_source_t *source)
         return add_source_to_scene(scene, source);
     }
     return nullptr;
-}
-
-inline void create_source()
-{
-    obs_scene_t *scene = get_current_scene();
-    if (scene)
-    {
-        blog(LOG_INFO, "ok scene current");
-        obs_source_t *img_source = create_img_source();
-        const char *name = obs_source_get_name(img_source);
-        blog(LOG_INFO, "New source name  %s", name);
-        add_source_to_scene(scene, img_source);
-    }
 }
 
 inline bool on_item_iterate(void *privateData, obs_source_t *source)
