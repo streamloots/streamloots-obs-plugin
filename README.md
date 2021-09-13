@@ -20,12 +20,11 @@ More information:  https://obsproject.com/docs/reference-core-objects.html
 
 
 ## Todo's:
-- Process request each for thread
-- Handle close connection, fix error on obs close
+- Handle port is in use
 - Type requests, metadata, and responses
 - Position in scenece centered
-- Handle port is in use
 - Save current state of scene in case something goes wrong, or to restore after timeout
+- Process request each for thread
 
 ## Important repos:
 - https://github.com/Palakis/obs-websocket
