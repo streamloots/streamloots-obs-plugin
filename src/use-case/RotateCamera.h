@@ -8,14 +8,13 @@
 
 inline void rotate_source(const char *name, int seconds)
 {
+    blog(LOG_INFO, "rotating camera of source: %s", name);
     obs_source_t *source = obs_get_source_by_name(name);
     obs_source_set_async_rotation(source, 180);
 
     std::function<void()> func1 = [&]()
     {
-        blog(LOG_INFO, "restoring rotation");
-        blog(LOG_INFO, "rotating source: %s", name);
-        obs_source_t *source = obs_get_source_by_name(name);
+        blog(LOG_INFO, "restoring rotation of source: %s", name);
         obs_source_set_async_rotation(source, 0);
     };
 
@@ -32,7 +31,6 @@ inline void RotateCamera(QString messageId, obs_data_t *metadata)
         auto name = obs_data_get_string(item, "sourceName");
         QString kind = obs_data_get_string(item, "sourceKind");
         if(kind=="dshow_input"){
-            blog(LOG_INFO, "rotating camera: %s %s", name, kind);
             rotate_source(name, seconds);
         }
     }
