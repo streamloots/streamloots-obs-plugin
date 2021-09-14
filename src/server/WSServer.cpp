@@ -42,7 +42,7 @@ void WSServer::serverRunner()
 	blog(LOG_INFO, "IO thread exited.");
 }
 
-void WSServer::start(int port)
+void WSServer::start()
 {
     if (_server.is_listening())
     {
@@ -52,18 +52,26 @@ void WSServer::start(int port)
 
     _server.reset();
 
-    _serverPort = port;
+    
 
     websocketpp::lib::error_code errorCode;
 
-    blog(LOG_INFO, "WSServer::start: Not locked to IPv4 bindings");
-    _server.listen(_serverPort, errorCode);
+    _serverPort = 9005;
+    std::string errorCodeMessage;
+    do {
+        blog(LOG_INFO, "WSServer::start: Not locked to IPv4 bindings");
+        _serverPort++;
+        _server.listen(_serverPort, errorCode);
+
+        if (errorCode) {
+            errorCodeMessage = errorCode.message();
+            blog(LOG_INFO, "server: listen failed: %s", errorCodeMessage.c_str());
+        }
+    } while(errorCode && _serverPort <= 9026);
+
 
     if (errorCode)
     {
-        std::string errorCodeMessage = errorCode.message();
-        blog(LOG_INFO, "server: listen failed: %s", errorCodeMessage.c_str());
-
         obs_frontend_push_ui_translation(obs_module_get_string);
         QString errorTitle =  QObject::tr("OBSWebsocket.Server.StartFailed.Title");
         QString errorMessage =  QObject::tr("OBSWebsocket.Server.StartFailed.Message").arg(_serverPort).arg(errorCodeMessage.c_str());
@@ -76,9 +84,7 @@ void WSServer::start(int port)
     }
 
     _server.start_accept();
-
     _serverThread = std::thread(&WSServer::serverRunner, this);
-
     blog(LOG_INFO, "server started successfully on port %d", _serverPort);
 }
 

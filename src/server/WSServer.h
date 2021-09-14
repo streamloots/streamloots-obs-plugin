@@ -16,7 +16,7 @@ class WSServer{
     public:
         explicit WSServer();
         virtual ~WSServer();
-        void start(int port);
+        void start();
         void stop();
 
     private:

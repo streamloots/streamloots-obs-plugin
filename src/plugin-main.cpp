@@ -52,7 +52,7 @@ void stop_server() {
 void init_server(){
     stop_server();
     _server = new WSServer();
-    _server->start(9006);
+    _server->start();
 }
 
 
