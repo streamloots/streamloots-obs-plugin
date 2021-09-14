@@ -39,21 +39,26 @@ void ___data_item_release(obs_data_item_t* dataItem) {
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
+WSServer *_server = NULL;
 
 
+void stop_server() {
+    if(_server != nullptr) {
+        _server->stop();
+    } 
+    _server = NULL;
+}
 
 void init_server(){
-    WSServer *server = new WSServer();
-    server->start(9006);
+    stop_server();
+    _server = new WSServer();
+    _server->start(9006);
 }
 
 
 void on_front_loaded(enum obs_frontend_event event, void *private_data){
     if (event == OBS_FRONTEND_EVENT_FINISHED_LOADING) {
         blog(LOG_INFO, "front finished");
-        // iterate_items();
-        // create_source();
-
     try{
         init_server();
     }catch(...){
@@ -66,12 +71,12 @@ bool obs_module_load(void)
 {
     blog(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
     obs_frontend_add_event_callback(on_front_loaded, NULL);
-    //TODO: event callback when fron unloaded
 
     return true;
 }
 
 void obs_module_unload()
 {
+    stop_server();
     blog(LOG_INFO, "plugin unloaded");
 }

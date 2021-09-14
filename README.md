@@ -20,12 +20,11 @@ More information:  https://obsproject.com/docs/reference-core-objects.html
 
 
 ## Todo's:
-- Process request each for thread
-- Handle close connection, fix error on obs close
+- Handle port is in use
 - Type requests, metadata, and responses
 - Position in scenece centered
-- Handle port is in use
 - Save current state of scene in case something goes wrong, or to restore after timeout
+- Process request each for thread
 
 ## Important repos:
 - https://github.com/Palakis/obs-websocket
@@ -90,3 +89,20 @@ In addition to enabling `macosSignAndNotarize`, you'll need to setup a few more 
     - `secrets.macOS.notarization.username`: Your Apple Developer Account's username
     - `secrets.macOS.notarization.password`: Your Apple Developer Account's password
     - `secrets.macOS.notarization.providerShortName`: Identifier (`Provider Short Name`, as Apple calls it) of the Developer Team to which the signing certificates belong. 
+
+### How to know the real property names on a source to set?
+OBS Api documentation it's unclear about this point. It  only contains documentation about the methods to call to configure props. These methods recieves a `propId`.
+However, this params is defined as a plain string and there is not documentation about what are the posible values.
+
+So to workaround is to get that props directly from the OBS.
+1. Configure a source manually on obs with the configuration you wanted
+2. Name the source with an unique identifier. Like `sample`
+3. Use this code on any of the use-cases of the plugin:
+```
+obs_source_t *sampleSource = obs_get_source_by_name("sample");
+obs_data_t * sampleProperties=obs_source_get_settings(sampleSource);
+const char* json=obs_data_get_json(sampleProperties);
+blog(LOG_INFO, "sourceProperties :%s", json);
+```
+4. Execute the use case by sending a request from Postman
+5. Check the log for the JSON serializacion of the source settings

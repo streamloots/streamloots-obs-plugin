@@ -23,11 +23,12 @@ class WSServer{
         server _server;
         std::thread _serverThread;
         int _serverPort;
+        std::map<QString, connection_hdl> _connectionList;
 
         void onOpen(connection_hdl hdl);
+        void onClose(connection_hdl hdl);
         void onMessage(connection_hdl hdl, message_ptr msg);
         QString getRemoteEndpoint(connection_hdl hdl);
 
         void serverRunner();
-
 };

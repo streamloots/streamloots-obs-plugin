@@ -11,6 +11,7 @@ inline void DisplayImage(QString messageId, obs_data_t* metadata)
     blog(LOG_INFO, "url to display %s seconds:%d", url, seconds);
     obs_data_t *settings = obs_data_create();
     obs_data_set_string(settings, "url", url);
+    obs_data_set_bool(settings, "shutdown", true);
     
     obs_source_t *source = obs_source_create("browser_source", messageId.toStdString().c_str(), settings, NULL);
     auto scene_item = add_source_to_current_scene(source);

@@ -21,6 +21,10 @@ build_config := RelWithDebInfo
 
 msbuild=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
 
+powershell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+buildFolder=C:\Proyectos\streamloots-obs-plugin\release
+obsInstallationFolder=C:\Program Files\obs-studio
+
 root:
 	echo $(ROOT_DIR)
 
@@ -84,12 +88,17 @@ clean:
 	if exist build64 rd /s /q build64
 	if exist release rd /s /q release
 
+move-to-obs-folder:
+	$(powershell) "Get-ChildItem -Path '$(buildFolder)' | Copy-Item -Force -Destination '$(obsInstallationFolder)' -Recurse -Container"
+
 build:
 	$(MAKE) clean
 	$(MAKE) prepare-windows
 	$(MAKE) build-plugin-32
 	$(MAKE) build-plugin-64
 	$(MAKE) package-windows
+	$(MAKE) package-windows
+	$(MAKE) move-to-obs-folder
 
 build-package:
 	$(MAKE) build

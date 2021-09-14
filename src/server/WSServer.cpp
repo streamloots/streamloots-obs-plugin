@@ -18,7 +18,7 @@ WSServer::WSServer()
     _server.init_asio();
     _server.set_reuse_addr(true);
     _server.set_open_handler(bind(&WSServer::onOpen, this, ::_1));
-    // _server.set_close_handler(bind(&WSServer::onClose, this, ::_1));
+    _server.set_close_handler(bind(&WSServer::onClose, this, ::_1));
     _server.set_message_handler(bind(&WSServer::onMessage, this, ::_1, ::_2));
 }
 
@@ -48,11 +48,6 @@ void WSServer::start(int port)
     {
         blog(LOG_INFO, "WSServer::start: server already on this port and protocol mode. no restart needed");
         return;
-    }
-
-    if (_server.is_listening())
-    {
-        stop();
     }
 
     _server.reset();
@@ -90,8 +85,22 @@ void WSServer::start(int port)
 void WSServer::onOpen(connection_hdl hdl)
 {
     QString clientIp = getRemoteEndpoint(hdl);
+    std::map<QString,connection_hdl>::iterator it = _connectionList.find(clientIp);
+     if (it != _connectionList.end()) {
+         _server.close(hdl, 0, "");
+     }    
+
+    _connectionList[clientIp]=hdl;
     blog(LOG_INFO, "new client connection from %s", clientIp.toUtf8().constData());
 }
+
+void WSServer::onClose(connection_hdl hdl)
+{
+    QString clientIp = getRemoteEndpoint(hdl);
+    _connectionList.erase(clientIp);
+    blog(LOG_INFO, "closed client connection from %s", clientIp.toUtf8().constData());
+}
+
 
 void WSServer::onMessage(connection_hdl hdl, server::message_ptr msg)
 {
@@ -115,7 +124,14 @@ QString WSServer::getRemoteEndpoint(connection_hdl hdl)
 
 void WSServer::stop()
 {
+    blog(LOG_INFO, "stopping server - %d open connections", _connectionList.size());
+    std::map<QString, connection_hdl>::iterator it = _connectionList.begin();
+    for ( const auto &iter : _connectionList ) {
+        _server.close(iter.second, 0, "");
+    }
+      
 	if (!_server.is_listening()) {
+        blog(LOG_INFO, "server stopped - it was not listening");
 		return;
 	}
 
