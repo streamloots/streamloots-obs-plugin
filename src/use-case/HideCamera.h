@@ -23,10 +23,9 @@ inline void hideSceneItem(const char *name, int seconds)
     setTimeOut(seconds * 1000, func1);
 }
 
-inline void HideCamera(QString messageId, obs_data_t *metadata)
+inline void HideCamera(HideCameraRequest request)
 {
     OBSDataArrayAutoRelease items = getMediaItems();
-    int seconds = getMetadataSeconds(metadata);
     for (int i = 0; i < obs_data_array_count(items); i++)
     {
         OBSDataAutoRelease item = obs_data_array_item(items, i);
@@ -34,7 +33,7 @@ inline void HideCamera(QString messageId, obs_data_t *metadata)
         QString kind = obs_data_get_string(item, "sourceKind");
         if (kind == "dshow_input")
         {
-            hideSceneItem(name, seconds);
+            hideSceneItem(name, request.seconds);
         }
     }
 }

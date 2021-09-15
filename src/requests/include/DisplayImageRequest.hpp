@@ -1,6 +1,5 @@
 #ifndef requests_DisplayImageRequest_hpp
 #define requests_DisplayImageRequest_hpp
-#include <string>
 #include "./RequestBase.hpp"
 
 using namespace std;
@@ -8,7 +7,7 @@ using namespace std;
 namespace requests {
     class DisplayImageRequest : public RequestBase {
         public:
-            string url;
+            const char* url; //This cannot be a string due obs pluggin is in plain c
             int seconds;
 
             DisplayImageRequest(obs_data_t *request);

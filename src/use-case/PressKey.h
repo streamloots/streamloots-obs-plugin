@@ -96,9 +96,8 @@ inline void ShowFilter()
     }
 }
 
-inline void PressKey(QString messageId, obs_data_t *metadata)
+inline void PressKey(PressKeyRequest parsedRequest)
 {
-
     ShowFilter();
     std::function<void()> cb = [&]()
     {

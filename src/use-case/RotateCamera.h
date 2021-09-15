@@ -4,6 +4,7 @@
 #include "../utils/transforms.h"
 #include "../plugin-macros.generated.h"
 #include "./utils.h"
+#include "../requests/include/RotateCameraRequest.hpp"
 
 
 inline void rotate_source(const char *name, int seconds)
@@ -21,17 +22,16 @@ inline void rotate_source(const char *name, int seconds)
     setTimeOut(seconds * 1000, func1);
 }
 
-inline void RotateCamera(QString messageId, obs_data_t *metadata)
+inline void RotateCamera(RotateCameraRequest request)
 {
     OBSDataArrayAutoRelease items = getMediaItems();
-    int seconds = getMetadataSeconds(metadata);
     for (int i = 0; i < obs_data_array_count(items); i++)
     {
         OBSDataAutoRelease item = obs_data_array_item(items, i);
         auto name = obs_data_get_string(item, "sourceName");
         QString kind = obs_data_get_string(item, "sourceKind");
         if(kind=="dshow_input"){
-            rotate_source(name, seconds);
+            rotate_source(name, request.seconds);
         }
     }
 }
