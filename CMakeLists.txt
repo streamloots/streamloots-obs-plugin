@@ -62,6 +62,12 @@ set(PLUGIN_SOURCES
 	src/server/WSServer.cpp
 	src/server/WSRequest.cpp
 	src/use-case/UseCaseManager.cpp
+    src/requests/RequestTypes.cpp
+    src/requests/RequestBase.cpp
+    src/requests/DisplayImageRequest.cpp
+    src/requests/HideCameraRequest.cpp
+    src/requests/PressKeyRequest.cpp
+    src/requests/RotateCameraRequest.cpp
     )
 
 set(PLUGIN_HEADERS
@@ -74,6 +80,13 @@ set(PLUGIN_HEADERS
     src/use-case/PressKey.h
     src/use-case/HideCamera.h
     src/use-case/utils.h
+    src/requests/include/RequestTypes.hpp
+    src/requests/include/RequestBase.hpp
+    src/requests/include/DisplayImageRequest.hpp
+    src/requests/include/HideCameraRequest.hpp
+    src/requests/include/PressKeyRequest.hpp
+    src/requests/include/RotateCameraRequest.hpp
+    src/requests/utils/metadata.hpp
     )
 
 
