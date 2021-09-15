@@ -2,6 +2,12 @@
 #include <QtCore/QString>
 #include "../plugin-macros.generated.h"
 #include "../use-case/UseCaseManager.h"
+#include "../requests/include/RequestBase.hpp"
+#include "../responses/include/ResponseError.hpp"
+#include "../responses/include/Response.hpp"
+
+using namespace responses;
+using namespace requests;
 
 std::string WSRequest::processMessage(std::string message)
 {
@@ -10,67 +16,23 @@ std::string WSRequest::processMessage(std::string message)
 
 	blog(LOG_INFO, "processing %s", msg);
 
-	OBSDataAutoRelease data = obs_data_create_from_json(msg);
+	obs_data_t * data = obs_data_create_from_json(msg);
 	if (!data) {
 		blog(LOG_ERROR, "invalid JSON payload received for %s", msg);
-		return jsonDataToString(
-			errorResponse(nullptr, "invalid JSON payload")
-		);
+		ResponseError error("invalid JSON payload received for: " + msgContainer);
+		return error.toJson();
 	}
 
 	if (!obs_data_has_user_value(data, "request-type") || !obs_data_has_user_value(data, "message-id")
     ) {
-		return jsonDataToString(
-			errorResponse(nullptr, "missing request parameters")
-		);
+		blog(LOG_ERROR, "missing request parameters");
+		ResponseError error("missing request parameters");
+		return error.toJson();
 	}
 
 	blog(LOG_ERROR, "Data received %s", obs_data_get_json(data));
-	QString methodName = obs_data_get_string(data, "request-type");
-	OBSDataAutoRelease params = obs_data_create();
-	obs_data_apply(params, data);
-	obs_data_unset_user_value(params, "request-type");
-	obs_data_unset_user_value(params, "message-id");
-
+	QString messageId = obs_data_get_string(data, "message-id");
+	
 	UseCaseManager::processUseCase(data);
-
-	return jsonDataToString(
-			successResponse(nullptr, nullptr)
-		);
-}
-
-obs_data_t* WSRequest::successResponse(const char* messageId, obs_data_t* fields)
-{
-	return buildResponse(messageId, "ok", fields);
-}
-
-obs_data_t* WSRequest::errorResponse(const char* messageId, const char* errorMessage, obs_data_t* additionalFields)
-{
-	OBSDataAutoRelease fields = obs_data_create();
-	if (additionalFields) {
-		obs_data_apply(fields, additionalFields);
-	}
-	obs_data_set_string(fields, "error", errorMessage);
-	return buildResponse(messageId, "error", fields);
-}
-
-obs_data_t* WSRequest::buildResponse(const char* messageId, const char* status, obs_data_t* fields)
-{
-	obs_data_t* response = obs_data_create();
-	if (messageId) {
-		obs_data_set_string(response, "message-id", messageId);
-	}
-	obs_data_set_string(response, "status", status);
-
-	if (fields) {
-		obs_data_apply(response, fields);
-	}
-
-	return response;
-}
-
-std::string WSRequest::jsonDataToString(obs_data_t *data)
-{
-	std::string responseString = obs_data_get_json(data);
-	return responseString;
+	return Response(messageId.toStdString()).toJson();
 }
