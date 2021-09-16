@@ -27,9 +27,7 @@ string WSRequest::processMessage(string message)
 	}
 
 	blog(LOG_INFO, "Data received %s", obs_data_get_json(data));
-	QString messageId = obs_data_get_string(data, "message-id");
-	UseCaseManager::processUseCase(data);
-	return Response(messageId.toStdString()).toJson();
+	return UseCaseManager::processUseCase(data).toJson();
 }
 
 string WSRequest::validateData(string message, obs_data_t *data)
