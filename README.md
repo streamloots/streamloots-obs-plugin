@@ -20,7 +20,6 @@ More information:  https://obsproject.com/docs/reference-core-objects.html
 
 
 ## Todo's:
-- Handle port is in use
 - Type requests, metadata, and responses
 - Position in scenece centered
 - Save current state of scene in case something goes wrong, or to restore after timeout
