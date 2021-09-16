@@ -44,6 +44,9 @@ void UseCaseManager::processUseCase(obs_data_t *request)
             HideCameraRequest parsedRequest(request);
             HideCamera(parsedRequest);
             break;
+        }
+        default: {
+            break;
         }            
     }
 }
