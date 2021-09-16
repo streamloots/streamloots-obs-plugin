@@ -7,7 +7,7 @@
 #include "../requests/include/HideCameraRequest.hpp"
 #include "../responses/include/ResponseError.hpp"
 #include "./include/HideCamera.hpp"
-#include "./utils.h"
+#include "./utils/getSceneItemInScene.hpp"
 
 using namespace requests;
 using namespace responses;

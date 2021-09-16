@@ -1,5 +1,5 @@
-#ifndef UseCaseManager_hpp
-#define UserCaseManager_hpp
+#ifndef useCase_UseCaseManager_hpp
+#define useCase_UserCaseManager_hpp
 #include <obs-module.h>
 #include "../../responses/include/Response.hpp"
 

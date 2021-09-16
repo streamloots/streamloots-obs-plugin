@@ -1,5 +1,5 @@
-#ifndef WSRequest_hpp
-#define WSRequest_hpp
+#ifndef server_WSRequest_hpp
+#define server_WSRequest_hpp
 #include <obs-data.h>
 #include <string>
 

@@ -1,5 +1,5 @@
-#ifndef HideCamera_hpp
-#define HideCamera_hpp
+#ifndef useCase_HideCamera_hpp
+#define useCase_HideCamera_hpp
 #include <obs-module.h>
 #include "../../responses/include/Response.hpp"
 

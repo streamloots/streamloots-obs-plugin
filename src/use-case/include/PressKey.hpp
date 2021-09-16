@@ -1,5 +1,5 @@
-#ifndef PressKey_hpp
-#define PressKey_hpp
+#ifndef useCase_PressKey_hpp
+#define useCase_PressKey_hpp
 #include <obs-module.h>
 #include "../../responses/include/Response.hpp"
 

@@ -1,5 +1,5 @@
-#ifndef WSServer_hpp
-#define WSServer_hpp
+#ifndef server_WSServer_hpp
+#define server_WSServer_hpp
 #include <string>
 #include <QString>
 #include <websocketpp/config/asio_no_tls.hpp>

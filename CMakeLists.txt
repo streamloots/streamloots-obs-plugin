@@ -85,7 +85,7 @@ set(PLUGIN_HEADERS
     src/use-case/include/PressKey.hpp
     src/use-case/include/RotateCamera.hpp
     src/use-case/include/UseCaseManager.hpp
-    src/use-case/utils.h
+    src/use-case//utils/getSceneItemInScene.hpp
     src/responses/include/Response.hpp
     src/responses/include/ResponseError.hpp
     src/requests/include/RequestTypes.hpp

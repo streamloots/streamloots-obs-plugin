@@ -1,5 +1,5 @@
-#ifndef DisplayImage_hpp
-#define DisplayImage_hpp
+#ifndef useCase_DisplayImage_hpp
+#define useCase_DisplayImage_hpp
 #include <obs-module.h>
 #include "../../responses/include/Response.hpp"
 

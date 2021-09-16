@@ -1,7 +1,6 @@
 #include "../utils/timers.h"
 #include "../utils/scene_manager.h"
 #include "../plugin-macros.generated.h"
-#include "./utils.h"
 #include "./include/DisplayImage.hpp"
 #include "../requests/include/DisplayImageRequest.hpp"
 #include "../responses/include/ResponseError.hpp"

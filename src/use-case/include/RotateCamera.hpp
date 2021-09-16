@@ -1,5 +1,5 @@
-#ifndef RotateCamera_hpp
-#define RotateCamera_hpp
+#ifndef useCase_RotateCamera_hpp
+#define useCase_RotateCamera_hpp
 #include <obs-module.h>
 #include "../../responses/include/Response.hpp"
 

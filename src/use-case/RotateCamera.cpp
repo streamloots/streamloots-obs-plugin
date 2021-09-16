@@ -3,7 +3,6 @@
 #include "../utils/scene_manager.h"
 #include "../utils/transforms.h"
 #include "../plugin-macros.generated.h"
-#include "./utils.h"
 #include "../requests/include/RotateCameraRequest.hpp"
 #include "./include/RotateCamera.hpp"
 
