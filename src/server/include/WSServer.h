@@ -8,29 +8,31 @@
 #include <obs-frontend-api.h>
 
 using websocketpp::connection_hdl;
-typedef websocketpp::server<websocketpp::config::asio> server;
-typedef server::message_ptr message_ptr;
 
-class WSServer{
+namespace server {
+    typedef websocketpp::server<websocketpp::config::asio> server;
+    typedef server::message_ptr message_ptr;
 
-    public:
-        explicit WSServer();
-        virtual ~WSServer();
-        void start();
-        void stop();
+    class WSServer{
 
-    private:
-        server _server;
-        std::thread _serverThread;
-        int _serverPort;
-        std::map<QString, connection_hdl> _connectionList;
+        public:
+            explicit WSServer();
+            virtual ~WSServer();
+            void start();
+            void stop();
 
-        void onOpen(connection_hdl hdl);
-        void onClose(connection_hdl hdl);
-        void onMessage(connection_hdl hdl, message_ptr msg);
-        QString getRemoteEndpoint(connection_hdl hdl);
+        private:
+            server _server;
+            std::thread _serverThread;
+            int _serverPort;
+            std::map<QString, connection_hdl> _connectionList;
 
-        void serverRunner();
-};
+            void onOpen(connection_hdl hdl);
+            void onClose(connection_hdl hdl);
+            void onMessage(connection_hdl hdl, message_ptr msg);
+            QString getRemoteEndpoint(connection_hdl hdl);
 
+            void serverRunner();
+    };
+}
 #endif

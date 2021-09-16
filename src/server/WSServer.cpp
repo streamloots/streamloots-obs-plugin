@@ -11,6 +11,7 @@ QT_USE_NAMESPACE
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
 using websocketpp::lib::bind;
+using server::WSServer;
 
 WSServer::WSServer()
 {
