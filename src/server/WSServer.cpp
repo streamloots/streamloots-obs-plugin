@@ -1,11 +1,11 @@
-#include "WSServer.h"
 #include <QtCore/QObject>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QMainWindow>
 #include <obs-frontend-api.h>
-#include "WSRequest.h"
-#include "../plugin-macros.generated.h"
 #include <QtCore/QString>
+#include "../plugin-macros.generated.h"
+#include "./include/WSRequest.hpp"
+#include "./include/WSServer.h"
 
 QT_USE_NAMESPACE
 using websocketpp::lib::placeholders::_1;

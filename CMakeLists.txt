@@ -74,8 +74,8 @@ set(PLUGIN_SOURCES
 
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h
-    src/server/WSServer.h
-    src/server/WSRequest.h
+    src/server/include/WSServer.hpp
+    src/server/include/WSRequest.h
     src/use-case/UseCaseManager.h
     src/use-case/DisplayImage.h
     src/use-case/RotateCamera.h

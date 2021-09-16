@@ -1,5 +1,5 @@
-
-#pragma once
+#ifndef WSServer_hpp
+#define WSServer_hpp
 #include <string>
 #include <QString>
 #include <websocketpp/config/asio_no_tls.hpp>
@@ -32,3 +32,5 @@ class WSServer{
 
         void serverRunner();
 };
+
+#endif

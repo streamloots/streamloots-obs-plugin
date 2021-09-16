@@ -14,9 +14,7 @@ ResponseError::ResponseError(string error, string messageId) : ResponseError(err
 }
 
 string ResponseError::toJson() {
-    obs_data_t* response = obs_data_create();
-    obs_data_set_string(response, "message-id", messageId);
-	obs_data_set_bool(response, "success", success);
+    obs_data_t* response = Response::getBaseResponseData();
     obs_data_set_string(response, "error", error);
 	
 	return obs_data_get_json(response);

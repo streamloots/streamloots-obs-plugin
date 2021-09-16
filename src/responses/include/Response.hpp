@@ -12,6 +12,7 @@ namespace responses {
 
         protected:
             bool success; 
+            obs_data_t* getBaseResponseData();
     };
 }
 
