@@ -23,7 +23,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <graphics/vec2.h>
 #include <iostream>
 #include <QString>
-#include "server/WSServer.h"
+#include "./server/include/WSServer.h"
 
 void ___source_dummy_addref(obs_source_t*) {}
 void ___sceneitem_dummy_addref(obs_sceneitem_t*) {}

@@ -1,6 +1,6 @@
 #include <QtCore/QString>
 #include "../plugin-macros.generated.h"
-#include "../use-case/UseCaseManager.h"
+#include "../use-case/include/UseCaseManager.hpp"
 #include "../requests/include/RequestBase.hpp"
 #include "../responses/include/ResponseError.hpp"
 #include "../responses/include/Response.hpp"
