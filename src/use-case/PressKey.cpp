@@ -1,8 +1,30 @@
 #define WINVER 0x0500
+#include <windows.h>
 #include <winuser.h>
+#include "../requests/include/PressKeyRequest.hpp"
+#include "../responses/include/ResponseError.hpp"
 #include "../utils/timers.h"
+#include "./include/PressKey.hpp"
 
-inline void pressKeyB(char mK)
+using namespace requests;
+using namespace responses;
+using useCase::PressKey;
+
+Response PressKey::invoke(obs_data_t *baseRequest)
+{
+    PressKeyRequest request(baseRequest);
+    ShowFilter();
+    std::function<void()> cb = [&]()
+    {
+        blog(LOG_INFO, "pressing enter");
+        ShowFilter();
+    };
+    setTimeOut(10 * 1000, cb);
+
+    return Response(request.messageId.toStdString());
+}
+
+void PressKey::pressKeyB(char mK)
 {
     HKL kbl = GetKeyboardLayout(0);
     INPUT ip;
@@ -23,7 +45,7 @@ inline void pressKeyB(char mK)
     SendInput(1, &ip, sizeof(INPUT));
 }
 
-void pressEnter()
+void PressKey::pressEnter()
 {
     blog(LOG_INFO, "pressing enter");
     INPUT ip;
@@ -37,9 +59,7 @@ void pressEnter()
     SendInput(1, &ip, sizeof(INPUT));
 }
 
-
-
-inline void ShowDesktop()
+void PressKey::ShowDesktop()
 {
     blog(LOG_INFO, "Sending W+D");
     INPUT inputs[4] = {};
@@ -67,7 +87,7 @@ inline void ShowDesktop()
     }
 }
 
-inline void ShowFilter()
+void PressKey::ShowFilter()
 {
     blog(LOG_INFO, "Sending CTRL+P");
     INPUT inputs[4] = {};
@@ -94,15 +114,4 @@ inline void ShowFilter()
     {
         blog(LOG_ERROR, "SendInput failed: 0x%x\n", HRESULT_FROM_WIN32(GetLastError()));
     }
-}
-
-inline void PressKey(PressKeyRequest parsedRequest)
-{
-    ShowFilter();
-    std::function<void()> cb = [&]()
-    {
-        blog(LOG_INFO, "pressing enter");
-        ShowFilter();
-    };
-    setTimeOut(10 * 1000, cb);
 }

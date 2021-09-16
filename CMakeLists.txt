@@ -61,7 +61,11 @@ set(PLUGIN_SOURCES
 	src/plugin-main.cpp
 	src/server/WSServer.cpp
 	src/server/WSRequest.cpp
-	src/use-case/UseCaseManager.cpp
+	src/use-case/DisplayImage.cpp
+    src/use-case/HideCamera.cpp
+    src/use-case/PressKey.cpp
+    src/use-case/RotateCamera.cpp
+    src/use-case/UseCaseManager.cpp
     src/responses/Response.cpp
     src/responses/ResponseError.cpp
     src/requests/RequestTypes.cpp
@@ -76,11 +80,11 @@ set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h
     src/server/include/WSServer.h
     src/server/include/WSRequest.hpp
+    src/use-case/include/DisplayImage.hpp
+    src/use-case/include/HideCamera.hpp
+    src/use-case/include/PressKey.hpp
+    src/use-case/include/RotateCamera.hpp
     src/use-case/include/UseCaseManager.hpp
-    src/use-case/DisplayImage.h
-    src/use-case/RotateCamera.h
-    src/use-case/PressKey.h
-    src/use-case/HideCamera.h
     src/use-case/utils.h
     src/responses/include/Response.hpp
     src/responses/include/ResponseError.hpp

@@ -9,6 +9,7 @@
 using namespace std;
 using namespace responses;
 using namespace requests;
+using namespace useCase;
 
 const string WSRequest::NO_VALIDATION_ERROR = "";
 

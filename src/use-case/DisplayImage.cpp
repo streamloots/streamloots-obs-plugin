@@ -1,14 +1,18 @@
-#pragma once
 #include "../utils/timers.h"
 #include "../utils/scene_manager.h"
 #include "../plugin-macros.generated.h"
 #include "./utils.h"
+#include "./include/DisplayImage.hpp"
 #include "../requests/include/DisplayImageRequest.hpp"
+#include "../responses/include/ResponseError.hpp"
 
 using namespace requests;
+using namespace responses;
+using useCase::DisplayImage;
 
-inline void DisplayImage(DisplayImageRequest request)
-{
+Response DisplayImage::invoke(obs_data_t * baseRequest) {
+    DisplayImageRequest request(baseRequest);
+
     blog(LOG_INFO, "url to display %s seconds:%d", request.url, request.seconds);
     obs_data_t *settings = obs_data_create();
     obs_data_set_string(settings, "url", request.url);
@@ -25,4 +29,5 @@ inline void DisplayImage(DisplayImageRequest request)
         };      
 
     setTimeOut(request.seconds*1000, func1);
+    return Response(request.messageId.toStdString());
 }
