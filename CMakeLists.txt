@@ -76,7 +76,7 @@ set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h
     src/server/include/WSServer.hpp
     src/server/include/WSRequest.h
-    src/use-case/UseCaseManager.h
+    src/use-case/include/UseCaseManager.hpp
     src/use-case/DisplayImage.h
     src/use-case/RotateCamera.h
     src/use-case/PressKey.h

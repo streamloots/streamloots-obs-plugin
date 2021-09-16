@@ -5,7 +5,7 @@
 #include "../requests/include/RotateCameraRequest.hpp"
 #include "../requests/include/PressKeyRequest.hpp"
 #include "../requests/include/HideCameraRequest.hpp"
-#include "./UseCaseManager.h"
+#include "./include/UseCaseManager.hpp"
 #include "./DisplayImage.h"
 #include "./RotateCamera.h"
 #include "./PressKey.h"
