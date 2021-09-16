@@ -22,6 +22,8 @@ namespace server {
             void stop();
 
         private:
+            const static int START_PORT;
+            const static int END_PORT;
             server _server;
             std::thread _serverThread;
             int _serverPort;

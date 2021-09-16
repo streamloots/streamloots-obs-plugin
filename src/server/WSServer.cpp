@@ -13,6 +13,9 @@ using websocketpp::lib::placeholders::_2;
 using websocketpp::lib::bind;
 using server::WSServer;
 
+const int WSServer::START_PORT = 9006;
+const int WSServer::END_PORT = 9026;
+
 WSServer::WSServer()
 {
     _server.get_alog().clear_channels(websocketpp::log::alevel::frame_header | websocketpp::log::alevel::frame_payload | websocketpp::log::alevel::control);
@@ -57,18 +60,18 @@ void WSServer::start()
 
     websocketpp::lib::error_code errorCode;
 
-    _serverPort = 9005;
+    _serverPort = WSServer::START_PORT;
     std::string errorCodeMessage;
     do {
         blog(LOG_INFO, "WSServer::start: Not locked to IPv4 bindings");
-        _serverPort++;
         _server.listen(_serverPort, errorCode);
 
         if (errorCode) {
+            _serverPort++;
             errorCodeMessage = errorCode.message();
             blog(LOG_INFO, "server: listen failed: %s", errorCodeMessage.c_str());
         }
-    } while(errorCode && _serverPort <= 9026);
+    } while(errorCode && _serverPort <= WSServer::END_PORT);
 
 
     if (errorCode)
