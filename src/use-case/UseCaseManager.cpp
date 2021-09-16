@@ -1,35 +1,44 @@
 #pragma once
-#include "UseCaseManager.h"
-#include <QtCore/QString>
-#include "../plugin-macros.generated.h"
-#include "./DisplayImage.h"
-#include "./RotateCamera.h"
-#include "./PressKey.h"
-#include "./HideCamera.h"
+#include "../requests/include/RequestBase.hpp"
+#include "../requests/include/RequestTypes.hpp"
+#include "../responses/include/ResponseError.hpp"
+#include "./include/UseCaseManager.hpp"
+#include "./include/DisplayImage.hpp"
+#include "./include/HideCamera.hpp"
+#include "./include/PressKey.hpp"
+#include "./include/RotateCamera.hpp"
+
+
+using namespace requests;
+using namespace responses;
+using namespace useCase;
 
 //TODO: use hash https://github.com/Palakis/obs-websocket/blob/bbf4b321d741a5d09edb2497c764f9e6c6580318/src/WSRequestHandler.cpp#L31
-void UseCaseManager::processUseCase(obs_data_t *request)
+Response UseCaseManager::processUseCase(obs_data_t *request)
 {
-    blog(LOG_ERROR, "Procesing use case %s", obs_data_get_json(request));
+    blog(LOG_INFO, "Procesing use case %s", obs_data_get_json(request));
 
-    QString methodName = obs_data_get_string(request, "request-type");
-    QString messageId = obs_data_get_string(request, "message-id");
-    OBSDataAutoRelease metadata = obs_data_get_obj(request, "metadata");
+    RequestBase baseRequest(request);
 
-    if (methodName == "display-image")
-    {
-        DisplayImage(messageId, metadata);
-    }
-    if (methodName == "rotate-camera")
-    {
-        RotateCamera(messageId, metadata);
-    }
-    if (methodName == "press-key")
-    {
-        PressKey(messageId, metadata);
-    }
-    if (methodName == "hide-camera")
-    {
-        HideCamera(messageId, metadata);
+    switch(baseRequest.type) {
+        case RequestType::Types::DisplayImageType:
+        {
+            return DisplayImage::invoke(request);
+        }            
+        case RequestType::Types::RotateCameraType:
+        {
+            return RotateCamera::invoke(request);
+        }            
+        case RequestType::Types::PressKeyType:
+        {
+            return PressKey::invoke(request);
+        }            
+        case RequestType::Types::HideCameraType:
+        {
+            return HideCamera::invoke(request);
+        }
+        default: {
+            return ResponseError("unknown request-type", baseRequest.messageId.toStdString());
+        }            
     }
 }

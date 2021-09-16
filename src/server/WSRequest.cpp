@@ -1,76 +1,58 @@
-#include "WSRequest.h"
 #include <QtCore/QString>
 #include "../plugin-macros.generated.h"
-#include "../use-case/UseCaseManager.h"
+#include "../use-case/include/UseCaseManager.hpp"
+#include "../requests/include/RequestBase.hpp"
+#include "../responses/include/ResponseError.hpp"
+#include "../responses/include/Response.hpp"
+#include "./include/WSRequest.hpp"
 
-std::string WSRequest::processMessage(std::string message)
+using namespace std;
+using namespace responses;
+using namespace requests;
+using namespace useCase;
+using server::WSRequest;
+
+const string WSRequest::NO_VALIDATION_ERROR = "";
+
+string WSRequest::processMessage(string message)
 {
-	std::string msgContainer(message);
-	const char* msg = msgContainer.c_str();
-
+	string msgContainer(message);
+	const char *msg = msgContainer.c_str();
 	blog(LOG_INFO, "processing %s", msg);
 
-	OBSDataAutoRelease data = obs_data_create_from_json(msg);
-	if (!data) {
-		blog(LOG_ERROR, "invalid JSON payload received for %s", msg);
-		return jsonDataToString(
-			errorResponse(nullptr, "invalid JSON payload")
-		);
+	obs_data_t *data = obs_data_create_from_json(msg);
+	string error = validateData(message, data);
+	if(error != NO_VALIDATION_ERROR){
+		return error;
 	}
 
-	if (!obs_data_has_user_value(data, "request-type") || !obs_data_has_user_value(data, "message-id")
-    ) {
-		return jsonDataToString(
-			errorResponse(nullptr, "missing request parameters")
-		);
-	}
-
-	blog(LOG_ERROR, "Data received %s", obs_data_get_json(data));
-	QString methodName = obs_data_get_string(data, "request-type");
-	OBSDataAutoRelease params = obs_data_create();
-	obs_data_apply(params, data);
-	obs_data_unset_user_value(params, "request-type");
-	obs_data_unset_user_value(params, "message-id");
-
-	UseCaseManager::processUseCase(data);
-
-	return jsonDataToString(
-			successResponse(nullptr, nullptr)
-		);
+	blog(LOG_INFO, "Data received %s", obs_data_get_json(data));
+	return UseCaseManager::processUseCase(data).toJson();
 }
 
-obs_data_t* WSRequest::successResponse(const char* messageId, obs_data_t* fields)
+string WSRequest::validateData(string message, obs_data_t *data)
 {
-	return buildResponse(messageId, "ok", fields);
-}
-
-obs_data_t* WSRequest::errorResponse(const char* messageId, const char* errorMessage, obs_data_t* additionalFields)
-{
-	OBSDataAutoRelease fields = obs_data_create();
-	if (additionalFields) {
-		obs_data_apply(fields, additionalFields);
-	}
-	obs_data_set_string(fields, "error", errorMessage);
-	return buildResponse(messageId, "error", fields);
-}
-
-obs_data_t* WSRequest::buildResponse(const char* messageId, const char* status, obs_data_t* fields)
-{
-	obs_data_t* response = obs_data_create();
-	if (messageId) {
-		obs_data_set_string(response, "message-id", messageId);
-	}
-	obs_data_set_string(response, "status", status);
-
-	if (fields) {
-		obs_data_apply(response, fields);
+	if (!data)
+	{
+		blog(LOG_ERROR, "invalid JSON payload received for %s", message);
+		ResponseError error("invalid JSON payload received for: " + message);
+		return error.toJson();
 	}
 
-	return response;
-}
+	if (!obs_data_has_user_value(data, "message-id"))
+	{
+		blog(LOG_ERROR, "missing message-id");
+		ResponseError error("missing message-id");
+		return error.toJson();
+	}
 
-std::string WSRequest::jsonDataToString(obs_data_t *data)
-{
-	std::string responseString = obs_data_get_json(data);
-	return responseString;
+	if (!obs_data_has_user_value(data, "request-type"))
+	{
+		QString messageId = obs_data_get_string(data, "message-id");
+		blog(LOG_ERROR, "missing request-type on message: %s", messageId.toStdString());
+		ResponseError error("missing request-type", messageId.toStdString());
+		return error.toJson();
+	}
+
+	return NO_VALIDATION_ERROR;
 }
