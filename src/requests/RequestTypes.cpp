@@ -11,9 +11,11 @@ map<QString, RequestType::Types> RequestType::requestTypeMap = {
     };
 
 RequestType::Types RequestType::from(QString type) {
-    if(requestTypeMap.find(type) == requestTypeMap.end()) {
+    map<QString, RequestType::Types>::iterator it = requestTypeMap.find(type);
+    
+    if(it == requestTypeMap.end()) {
         return Unknown;
     }
 
-    return requestTypeMap[type];
+    return it->second;
 }
