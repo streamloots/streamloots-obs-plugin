@@ -4,6 +4,7 @@
 #include "../responses/include/ResponseError.hpp"
 #include "./include/UseCaseManager.hpp"
 #include "./include/DisplayImage.hpp"
+#include "./include/DisplayVideo.hpp"
 #include "./include/HideCamera.hpp"
 #include "./include/PressKey.hpp"
 #include "./include/RotateCamera.hpp"
@@ -36,6 +37,10 @@ Response UseCaseManager::processUseCase(obs_data_t *request)
         case RequestType::Types::HideCameraType:
         {
             return HideCamera::invoke(request);
+        }
+        case RequestType::Types::DisplayVideo:
+        {
+            return DisplayVideo::invoke(request);
         }
         default: {
             return ResponseError("unknown request-type", baseRequest.messageId.toStdString());

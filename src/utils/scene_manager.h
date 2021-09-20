@@ -37,23 +37,6 @@ inline obs_sceneitem_t *add_source_to_scene(obs_scene_t *scene, obs_source_t *so
     return scene_item;
 }
 
-inline void set_source_full_screen(obs_source_t *source)
-{
-    blog(LOG_INFO, "Trying to set full screen resolution");
-    obs_video_info ovi;
-    bool videoSuccess = obs_get_video_info(&ovi);
-
-    if (videoSuccess) {
-        obs_data_t * settings=obs_source_get_settings(source);
-        obs_data_set_int(settings, "width", ovi.base_width);
-        obs_data_set_int(settings, "height", ovi.base_height);
-        blog(LOG_INFO, "Change source to fit full screen resolution");
-    }
-    else {
-        blog(LOG_ERROR, "Unable to set source to full screen resolution");
-    }
-}
-
 inline obs_sceneitem_t *add_source_to_current_scene(obs_source_t *source)
 {
     obs_scene_t *scene = get_current_scene();

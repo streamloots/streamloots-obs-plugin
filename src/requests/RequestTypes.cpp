@@ -7,7 +7,8 @@ map<QString, RequestType::Types> RequestType::requestTypeMap = {
         {"display-image", DisplayImageType},
         {"rotate-camera", RotateCameraType},
         {"press-key", PressKeyType},
-        {"hide-camera", HideCameraType}
+        {"hide-camera", HideCameraType},
+        {"display-video", DisplayVideo}
     };
 
 RequestType::Types RequestType::from(QString type) {
