@@ -6,7 +6,7 @@
 namespace requests {
     class RequestType {
         public:
-            static enum Types { DisplayImageType, RotateCameraType, PressKeyType, HideCameraType, Unknown };
+            static enum Types { DisplayImageType, RotateCameraType, PressKeyType, HideCameraType, DisplayVideo, Unknown };
             static Types from(QString type);
 
         private:

@@ -62,6 +62,7 @@ set(PLUGIN_SOURCES
 	src/server/WSServer.cpp
 	src/server/WSRequest.cpp
 	src/use-case/DisplayImage.cpp
+    src/use-case/DisplayVideo.cpp
     src/use-case/HideCamera.cpp
     src/use-case/PressKey.cpp
     src/use-case/RotateCamera.cpp
@@ -71,6 +72,7 @@ set(PLUGIN_SOURCES
     src/requests/RequestTypes.cpp
     src/requests/RequestBase.cpp
     src/requests/DisplayImageRequest.cpp
+    src/requests/DisplayVideoRequest.cpp
     src/requests/HideCameraRequest.cpp
     src/requests/PressKeyRequest.cpp
     src/requests/RotateCameraRequest.cpp
@@ -81,6 +83,7 @@ set(PLUGIN_HEADERS
     src/server/include/WSServer.h
     src/server/include/WSRequest.hpp
     src/use-case/include/DisplayImage.hpp
+    src/use-case/include/DisplayVideo.hpp
     src/use-case/include/HideCamera.hpp
     src/use-case/include/PressKey.hpp
     src/use-case/include/RotateCamera.hpp
@@ -91,6 +94,7 @@ set(PLUGIN_HEADERS
     src/requests/include/RequestTypes.hpp
     src/requests/include/RequestBase.hpp
     src/requests/include/DisplayImageRequest.hpp
+    src/requests/include/DisplayVideoRequest.hpp
     src/requests/include/HideCameraRequest.hpp
     src/requests/include/PressKeyRequest.hpp
     src/requests/include/RotateCameraRequest.hpp
