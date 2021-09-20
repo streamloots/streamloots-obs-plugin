@@ -18,8 +18,8 @@ Response DisplayImage::invoke(obs_data_t * baseRequest) {
     obs_data_set_bool(settings, "shutdown", true);
     
     obs_source_t *source = obs_source_create("browser_source", request.messageId.toStdString().c_str(), settings, NULL);
+    set_source_full_screen(source);
     auto scene_item = add_source_to_current_scene(source);
-    center_source(scene_item);
 
     std::function<void()> func1 = [&]()
         {
