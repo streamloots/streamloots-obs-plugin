@@ -16,6 +16,7 @@ Response DisplayImage::invoke(obs_data_t * baseRequest) {
     obs_data_t *settings = obs_data_create();
     obs_data_set_string(settings, "url", request.url);
     obs_data_set_bool(settings, "shutdown", true);
+    obs_data_set_string(settings, "css", "body { background-color: transparent!important; }");
     
     obs_source_t *source = obs_source_create("browser_source", request.messageId.toStdString().c_str(), settings, NULL);
     set_source_full_screen(source);
