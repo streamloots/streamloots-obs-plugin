@@ -37,15 +37,6 @@ inline obs_sceneitem_t *add_source_to_scene(obs_scene_t *scene, obs_source_t *so
     return scene_item;
 }
 
-inline void center_source(obs_sceneitem_t *scene_item)
-{
-    //#center correctly
-    struct vec2 position = {0.0f, 0.0f};
-    struct vec2 scale = {2.0f, 2.0f};
-    obs_sceneitem_set_pos(scene_item, &position);
-    obs_sceneitem_set_scale(scene_item, &scale);
-}
-
 inline obs_sceneitem_t *add_source_to_current_scene(obs_source_t *source)
 {
     obs_scene_t *scene = get_current_scene();
