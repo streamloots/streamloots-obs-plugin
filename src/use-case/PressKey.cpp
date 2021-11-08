@@ -13,50 +13,89 @@ using useCase::PressKey;
 Response PressKey::invoke(obs_data_t *baseRequest)
 {
     PressKeyRequest request(baseRequest);
-    ShowFilter();
     std::function<void()> cb = [&]()
     {
-        blog(LOG_INFO, "pressing enter");
-        ShowFilter();
+        // pressKeys(request.keys);
+        pressKeySeconds();
     };
     setTimeOut(10 * 1000, cb);
 
     return Response(request.messageId.toStdString());
 }
 
-void PressKey::pressKeyB(char mK)
+void PressKey::pressKeySeconds()
 {
+    INPUT ip = getKey("A");
+    ip.ki.time = 3000;
+    SendInput(1, &ip, sizeof(INPUT));
+
+    std::function<void()> cb = [&]()
+    {
+        INPUT ip2 = getKey("A");
+        ip2.ki.dwFlags = KEYEVENTF_KEYUP;
+        SendInput(1, &ip2, sizeof(INPUT));
+    };
+    setTimeOut(5 * 1000, cb);
+}
+void PressKey::pressKeys(OBSDataArrayAutoRelease keys)
+{
+    INPUT inputs[4] = {};
+    ZeroMemory(inputs, sizeof(inputs));
+    for (int i = 0; i < obs_data_array_count(keys); i++)
+    {
+        OBSDataAutoRelease keyObj = obs_data_array_item(keys, i);
+        QString key = obs_data_get_string(keyObj, "key");
+        blog(LOG_INFO, "string %s", key);
+        INPUT ip = getKey(key);
+        inputs[i] = ip;
+    }
+    for (int i = 0; i < obs_data_array_count(keys); i++)
+    {
+        OBSDataAutoRelease keyObj = obs_data_array_item(keys, i);
+        QString key = obs_data_get_string(keyObj, "key");
+        blog(LOG_INFO, "string %s", key);
+        INPUT ip = getKey(key);
+        ip.ki.dwFlags = KEYEVENTF_KEYUP;
+        inputs[i + 2] = ip;
+    }
+    UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+    if (uSent != ARRAYSIZE(inputs))
+    {
+        blog(LOG_ERROR, "SendInput failed: 0x%x\n", HRESULT_FROM_WIN32(GetLastError()));
+    }
+}
+
+INPUT PressKey::getKey(QString str)
+{
+    char key = str.at(0).toLatin1();
+    blog(LOG_INFO, "getting input %c", key);
     HKL kbl = GetKeyboardLayout(0);
     INPUT ip;
     ip.type = INPUT_KEYBOARD;
     ip.ki.time = 0;
-    ip.ki.dwFlags = KEYEVENTF_UNICODE;
-    if ((int)mK < 65 && (int)mK > 90) //for lowercase
+    if (str == "ALT")
+    {
+        ip.ki.wVk = 0x0012;
+        return ip;
+    }
+    if (str == "F4")
+    {
+        ip.ki.wVk = 0x0073;
+        return ip;
+    }
+
+    if ((int)key < 65 && (int)key > 90) //for lowercase
     {
         ip.ki.wScan = 0;
-        ip.ki.wVk = VkKeyScanEx(mK, kbl);
+        ip.ki.wVk = VkKeyScanEx(key, kbl);
     }
     else //for uppercase
     {
-        ip.ki.wScan = mK;
+        ip.ki.wScan = key;
         ip.ki.wVk = 0;
     }
     ip.ki.dwExtraInfo = 0;
-    SendInput(1, &ip, sizeof(INPUT));
-}
-
-void PressKey::pressEnter()
-{
-    blog(LOG_INFO, "pressing enter");
-    INPUT ip;
-    ip.type = INPUT_KEYBOARD;
-    ip.ki.time = 0;
-    ip.ki.dwFlags = KEYEVENTF_UNICODE;
-    ip.ki.wScan = VK_RETURN; //VK_RETURN is the code of Return key
-    ip.ki.wVk = 0;
-
-    ip.ki.dwExtraInfo = 0;
-    SendInput(1, &ip, sizeof(INPUT));
+    return ip;
 }
 
 void PressKey::ShowDesktop()

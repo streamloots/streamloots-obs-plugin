@@ -5,6 +5,7 @@
 namespace requests {
     class PressKeyRequest : public RequestBase {
         public:
+            OBSDataArrayAutoRelease keys;
             PressKeyRequest(obs_data_t *request);
     };
 }
