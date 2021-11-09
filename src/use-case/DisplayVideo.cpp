@@ -5,6 +5,9 @@
 #include "../requests/include/DisplayVideoRequest.hpp"
 #include "../responses/include/ResponseError.hpp"
 
+#include "../Config.hpp"
+#include "../plugin-macros.generated.h"
+
 using namespace requests;
 using namespace responses;
 using useCase::DisplayVideo;
@@ -22,6 +25,9 @@ Response DisplayVideo::invoke(obs_data_t * baseRequest) {
     
     obs_source_t *source = obs_source_create("ffmpeg_source", request.messageId.toStdString().c_str(), settings, NULL);
 
+    auto conf = GetConfig();
+    auto monitoringType = conf->MonitoringType;
+    obs_source_set_monitoring_type(source, (obs_monitoring_type) monitoringType);
     auto scene_item = add_source_to_current_scene(source);
     DisplayVideo::set_source_full_screen(scene_item);    
 

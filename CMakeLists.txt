@@ -59,6 +59,7 @@ configure_file(
 
 set(PLUGIN_SOURCES
 	src/plugin-main.cpp
+    src/Config.cpp
 	src/server/WSServer.cpp
 	src/server/WSRequest.cpp
 	src/use-case/DisplayImage.cpp
@@ -76,10 +77,12 @@ set(PLUGIN_SOURCES
     src/requests/HideCameraRequest.cpp
     src/requests/PressKeyRequest.cpp
     src/requests/RotateCameraRequest.cpp
+    src/forms/settings-dialog.cpp
     )
 
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h
+    src/Config.hpp
     src/server/include/WSServer.h
     src/server/include/WSRequest.hpp
     src/use-case/include/DisplayImage.hpp
@@ -99,6 +102,7 @@ set(PLUGIN_HEADERS
     src/requests/include/PressKeyRequest.hpp
     src/requests/include/RotateCameraRequest.hpp
     src/requests/utils/metadata.hpp
+    src/forms/settings-dialog.h
     )
 
 
