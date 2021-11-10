@@ -25,6 +25,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent, Qt::Dialog),
 							(int)OBS_MONITORING_TYPE_MONITOR_ONLY);
 	monitoringType->addItem("Both",
 							(int)OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT);
+
+	auto volume = ui->volume;
+	volume->setMinimum(0);
+	volume->setMaximum(2000);
+	volume->setSuffix("%");
 }
 
 void SettingsDialog::showEvent(QShowEvent *event)
@@ -34,9 +39,13 @@ void SettingsDialog::showEvent(QShowEvent *event)
 	if (conf)
 	{
 		auto mt = conf->MonitoringType;
+		auto volume = conf->Volume;
 		blog(LOG_INFO, "Option from config %d", mt);
 		auto idx = ui->audioMonitoring->findData(mt);
 		ui->audioMonitoring->setCurrentIndex(idx);
+
+		ui->volume->setValue((int)volume);
+		ui->volume->setFixedWidth(100);
 	}
 }
 
@@ -59,7 +68,10 @@ void SettingsDialog::FormAccepted()
 	auto idx = ui->audioMonitoring->currentIndex();
 	obs_monitoring_type mt = (obs_monitoring_type)ui->audioMonitoring->itemData(idx).toInt();
 
+	auto volume = ui->volume->value();
+
 	conf->MonitoringType = idx;
+	conf->Volume = (int) volume;
 	blog(LOG_INFO, "Option from ui %d", idx);
 	conf->Save();
 }

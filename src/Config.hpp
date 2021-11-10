@@ -16,5 +16,6 @@ class Config {
 		void MigrateFromGlobalSettings();
 
 		int MonitoringType;
+		double Volume;
 		bool SettingsLoaded;
 };
