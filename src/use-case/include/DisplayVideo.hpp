@@ -10,6 +10,7 @@ namespace useCase{
         
         private: 
             static void set_source_full_screen(obs_sceneitem_t *source);
+            static void configure_settings(obs_source_t *source);
         };
 }
 

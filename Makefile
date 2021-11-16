@@ -22,7 +22,7 @@ build_config := RelWithDebInfo
 msbuild=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
 
 powershell=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-buildFolder=C:\Proyectos\streamloots-obs-plugin\release
+buildFolder=${ROOT_DIR}\release
 obsInstallationFolder=C:\Program Files\obs-studio
 
 root:
