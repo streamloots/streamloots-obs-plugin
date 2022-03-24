@@ -3,11 +3,11 @@ name: 'Build on Push and Tag'
 on:
   push:
     paths-ignore: ['**.md']
-    branches: [master, feature/POG-1286-github-actions]
+    branches: ['*']
     tags: ['*']
   pull_request:
     paths-ignore: ['**.md']
-    branches: [master, feature/POG-1286-github-actions]
+    branches: ['*']
 
 env:
   PLUGIN_NAME: 'obs-streamloots'
