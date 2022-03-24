@@ -1,13 +1,6 @@
 name: 'Build on Push and Tag'
 
-on:
-  push:
-    paths-ignore: ['**.md']
-    branches: ['*']
-    tags: ['*']
-  pull_request:
-    paths-ignore: ['**.md']
-    branches: ['*']
+on: push
 
 env:
   PLUGIN_NAME: 'obs-streamloots'
