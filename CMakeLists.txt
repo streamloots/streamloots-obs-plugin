@@ -6,14 +6,14 @@ project(obs-streamloots VERSION 0.1.1)
 
 # Replace `Your Name Here` with the name (yours or your organization's) you want
 # to see as the author of the plugin (in the plugin's metadata itself and in the installers)
-set(PLUGIN_AUTHOR "Eslem")
+set(PLUGIN_AUTHOR "Streamloots")
 
 # Replace `com.example.obs-plugin-template` with a unique Bundle ID for macOS releases
 # (used both in the installer and when submitting the installer for notarization)
 set(MACOS_BUNDLEID "com.streamloots.obs-streamloots")
 
 # Replace `me@contoso.com` with the maintainer email address you want to put in Linux packages
-set(LINUX_MAINTAINER_EMAIL "eslem@streamloots.com")
+set(LINUX_MAINTAINER_EMAIL "engineering@streamloots.com")
 
 # TAKE NOTE: No need to edit things past this point
 
