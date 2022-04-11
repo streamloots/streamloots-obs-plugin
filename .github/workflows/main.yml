@@ -10,6 +10,7 @@ env:
   QTDIR64: ${{ github.workspace }}\deps\QT\5.10.1\msvc2017_64
   CMAKE_PREFIX_PATH:  ${{ github.workspace }}\deps\QT\5.10.1\msvc2017\lib\cmake\Qt5Widgets
   OBSDepsBasePath: ${{ github.workspace }}\deps\dependencies2019
+  DepsBasePath: ${{ github.workspace }}\deps\dependencies2019
   DepsPath64: ${{ github.workspace }}\deps\dependencies2019\win64
   OBSPath: ${{ github.workspace }}\deps\obs-studio
   CPPWSPath: ${{ github.workspace }}\deps\websocketpp
