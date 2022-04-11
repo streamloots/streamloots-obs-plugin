@@ -63,7 +63,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: 'src'
+          path: 'plugin'
           submodules: 'recursive'
       - name: Checkout obs-studio
         uses: actions/checkout@v3
@@ -74,18 +74,18 @@ jobs:
           submodules: 'recursive'
 
       - name: Setup Environment
-        working-directory: ${{ github.workspace }}/src
+        working-directory: ${{ github.workspace }}/plugin
         id: setup
         run: |
           $CommitHash = git rev-parse --short HEAD
           Write-Output "::set-output name=commitHash::${CommitHash}"
       
       - name: Build Plugin
-        # uses: ././plugin/.github/actions/build-plugin
+        uses: ././plugin/.github/actions/build-plugin
         # uses: ./.github/actions/build-plugin
-        uses: ./../.github/actions/build-plugin
+        # uses: ./../.github/actions/build-plugin
         with:
-          workingDirectory: ${{ github.workspace }}/src
+          workingDirectory: ${{ github.workspace }}/plugin
           target: ${{ matrix.arch }}
           config: RelWithDebInfo
           visualStudio: 'Visual Studio 17 2022'
@@ -93,7 +93,7 @@ jobs:
       # - name: Package Plugin
       #   uses: ./plugin/.github/actions/package-plugin
       #   with:
-      #     workingDirectory: ${{ github.workspace }}/src
+      #     workingDirectory: ${{ github.workspace }}/plugin
       #     target: ${{ matrix.arch }}
       #     config: RelWithDebInfo
 
@@ -102,13 +102,13 @@ jobs:
       #   uses: actions/upload-artifact@v3
       #   with:
       #     name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}
-      #     path: ${{ github.workspace }}/src/release/${{ env.PLUGIN_NAME }}-*.zip
+      #     path: ${{ github.workspace }}/plugin/release/${{ env.PLUGIN_NAME }}-*.zip
 
       # - name: Package Plugin Installer
       #   if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
       #   uses: ././plugin/.github/actions/package-plugin
       #   with:
-      #     workingDirectory: ${{ github.workspace }}/src
+      #     workingDirectory: ${{ github.workspace }}/plugin
       #     target: ${{ matrix.arch }}
       #     config: RelWithDebInfo
       #     createInstaller: 'true'
@@ -118,7 +118,7 @@ jobs:
       #   uses: actions/upload-artifact@v3
       #   with:
       #     name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}-installer
-      #     path: ${{ github.workspace }}/src/release/${{ env.PLUGIN_NAME }}-*.exe
+      #     path: ${{ github.workspace }}/plugin/release/${{ env.PLUGIN_NAME }}-*.exe
           
 
 
