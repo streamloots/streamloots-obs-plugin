@@ -12,35 +12,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo "aaaaaaaaa"
-          # ROOT_DIR=${GITHUB_WORKSPACE}
-          # DEPS_DIR=${ROOT_DIR}\deps
-          # QtBaseDir=${DEPS_DIR}\QT
-          # QTDIR32=${QtBaseDir}\5.10.1\msvc2017
-          # QTDIR64=${QtBaseDir}\5.10.1\msvc2017_64
-          # CMAKE_PREFIX_PATH=${QTDIR32}\lib\cmake\Qt5Widgets
-          # OBSDepsBasePath=${DEPS_DIR}\dependencies2019
-          # DepsPath64=${OBSDepsBasePath}\win64
-          # OBSPath=${DEPS_DIR}\obs-studio
-          # CPPWSPath=${DEPS_DIR}\websocketpp
-          # AsioPath=${DEPS_DIR}\asio
-          # buildFolder=${ROOT_DIR}\release
+          ROOT_DIR=${GITHUB_WORKSPACE}
+          DEPS_DIR=${ROOT_DIR}\deps
+          QtBaseDir=${DEPS_DIR}\QT
+          QTDIR32=${QtBaseDir}\5.10.1\msvc2017
+          QTDIR64=${QtBaseDir}\5.10.1\msvc2017_64
+          CMAKE_PREFIX_PATH=${QTDIR32}\lib\cmake\Qt5Widgets
+          OBSDepsBasePath=${DEPS_DIR}\dependencies2019
+          DepsPath64=${OBSDepsBasePath}\win64
+          OBSPath=${DEPS_DIR}\obs-studio
+          CPPWSPath=${DEPS_DIR}\websocketpp
+          AsioPath=${DEPS_DIR}\asio
+          buildFolder=${ROOT_DIR}\release
 
-          # echo "ROOT_DIR=${ROOT_DIR}" >> $GITHUB_ENV
-          # echo "DEPS_DIR=${DEPS_DIR}" >> $GITHUB_ENV
-          # echo "QtBaseDir=${QtBaseDir}" >> $GITHUB_ENV
-          # echo "QTDIR32=${QTDIR32}" >> $GITHUB_ENV
-          # echo "QTDIR64=${QTDIR64}" >> $GITHUB_ENV
-          # echo "CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}" >> $GITHUB_ENV
-          # echo "OBSDepsBasePath=${OBSDepsBasePath}" >> $GITHUB_ENV
-          # echo "DepsPath64=${DepsPath64}" >> $GITHUB_ENV
-          # echo "OBSPath=${OBSPath}" >> $GITHUB_ENV
-          # echo "CPPWSPath=${CPPWSPath}" >> $GITHUB_ENV
-          # echo "AsioPath=${AsioPath}" >> $GITHUB_ENV
-          # echo "buildFolder=${buildFolder}" >> $GITHUB_ENV
+          echo "ROOT_DIR=${ROOT_DIR}" >> $GITHUB_ENV
+          echo "DEPS_DIR=${DEPS_DIR}" >> $GITHUB_ENV
+          echo "QtBaseDir=${QtBaseDir}" >> $GITHUB_ENV
+          echo "QTDIR32=${QTDIR32}" >> $GITHUB_ENV
+          echo "QTDIR64=${QTDIR64}" >> $GITHUB_ENV
+          echo "CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}" >> $GITHUB_ENV
+          echo "OBSDepsBasePath=${OBSDepsBasePath}" >> $GITHUB_ENV
+          echo "DepsPath64=${DepsPath64}" >> $GITHUB_ENV
+          echo "OBSPath=${OBSPath}" >> $GITHUB_ENV
+          echo "CPPWSPath=${CPPWSPath}" >> $GITHUB_ENV
+          echo "AsioPath=${AsioPath}" >> $GITHUB_ENV
+          echo "buildFolder=${buildFolder}" >> $GITHUB_ENV
 
   # prepare-depencies:
-  #   runs-on: window-latest
+  #   runs-on: windows-latest
   #   needs: [set-env-variables]
   #   steps:
   #     - uses: actions/checkout@v2
