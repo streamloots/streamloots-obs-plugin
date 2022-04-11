@@ -79,60 +79,45 @@ jobs:
         run: |
           $CommitHash = git rev-parse --short HEAD
           Write-Output "::set-output name=commitHash::${CommitHash}"
-      - name: Check for GitHub Labels
-        id: seekingTesters
-        working-directory: ${{ github.workspace }}/src
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          $LabelFound = try {
-            $Params = @{
-              Authentication = 'Bearer'
-              Token = (ConvertTo-SecureString '${{ secrets.GITHUB_TOKEN }}' -AsPlainText)
-              Uri = '${{ github.event.pull_request.url }}'
-              UseBasicParsing = $true
-            }
-            (Invoke-RestMethod @Params).labels.name.contains("Seeking Testers")
-          } catch {
-            $false
-          }
-          Write-Output "::set-output name=found::$(([string]${LabelFound}).ToLower())"
+      
       - name: Build Plugin
-        uses: ././plugin/.github/actions/build-plugin
+        # uses: ././plugin/.github/actions/build-plugin
+        uses: ../.github/actions/build-plugin
         with:
           workingDirectory: ${{ github.workspace }}/src
           target: ${{ matrix.arch }}
           config: RelWithDebInfo
           visualStudio: 'Visual Studio 17 2022'
 
-      - name: Package Plugin
-        uses: ./plugin/.github/actions/package-plugin
-        with:
-          workingDirectory: ${{ github.workspace }}/src
-          target: ${{ matrix.arch }}
-          config: RelWithDebInfo
+      # - name: Package Plugin
+      #   uses: ./plugin/.github/actions/package-plugin
+      #   with:
+      #     workingDirectory: ${{ github.workspace }}/src
+      #     target: ${{ matrix.arch }}
+      #     config: RelWithDebInfo
 
-      - name: Upload Build Artifact
-        if: ${{ success() && (github.event_name != 'pull_request' || steps.seekingTesters.outputs.found == 'true') }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}
-          path: ${{ github.workspace }}/src/release/${{ env.PLUGIN_NAME }}-*.zip
+      # - name: Upload Build Artifact
+      #   if: ${{ success() && (github.event_name != 'pull_request' || steps.seekingTesters.outputs.found == 'true') }}
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}
+      #     path: ${{ github.workspace }}/src/release/${{ env.PLUGIN_NAME }}-*.zip
 
-      - name: Package Plugin Installer
-        if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
-        uses: ././plugin/.github/actions/package-plugin
-        with:
-          workingDirectory: ${{ github.workspace }}/src
-          target: ${{ matrix.arch }}
-          config: RelWithDebInfo
-          createInstaller: 'true'
+      # - name: Package Plugin Installer
+      #   if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
+      #   uses: ././plugin/.github/actions/package-plugin
+      #   with:
+      #     workingDirectory: ${{ github.workspace }}/src
+      #     target: ${{ matrix.arch }}
+      #     config: RelWithDebInfo
+      #     createInstaller: 'true'
 
-      - name: Upload Installer Artifact
-        if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}-installer
-          path: ${{ github.workspace }}/src/release/${{ env.PLUGIN_NAME }}-*.exe
+      # - name: Upload Installer Artifact
+      #   if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}-installer
+      #     path: ${{ github.workspace }}/src/release/${{ env.PLUGIN_NAME }}-*.exe
           
 
 
