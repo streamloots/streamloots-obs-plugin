@@ -37,3 +37,14 @@ jobs:
           echo "CPPWSPath=${CPPWSPath}" >> $GITHUB_ENV
           echo "AsioPath=${AsioPath}" >> $GITHUB_ENV
           echo "buildFolder=${buildFolder}" >> $GITHUB_ENV
+
+  prepare-depencies:
+    runs-on: window-latest
+    needs: [set-env-variables]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install QT
+        run:
+          echo %QtBaseDir% 
+          ci\windows\install-qt-win.cmd
+          dir %QtBaseDir%
