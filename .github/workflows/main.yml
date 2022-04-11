@@ -37,6 +37,7 @@ jobs:
       - name: Run clang-format
         run: |
           pwd
+          ls
           sudo ./.github/scripts/check-format.sh && sudo ./.github/scripts/check-changes.sh
 
       - name: Install cmake-format
