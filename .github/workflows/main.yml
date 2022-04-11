@@ -3,8 +3,8 @@ name: Release
 on: push
 
 env:
-  prueba: probando
-  pruebaRuta: $GITHUB_WORKSPACE/ruta
+  prueba: ${{ github.workspace }} 
+  pruebaRuta: ${{ github.workspace }}/ruta
 
 concurrency:
   group: ${{ github.ref }}
@@ -14,7 +14,7 @@ jobs:
   set-env-variables:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - shell: cmd
         run: |        
           SET ROOT_DIR=%GITHUB_WORKSPACE%
@@ -44,7 +44,7 @@ jobs:
     runs-on: windows-latest
     needs: [set-env-variables]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install QT
         shell: cmd
         run:
