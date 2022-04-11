@@ -38,7 +38,7 @@ jobs:
         run: |
           pwd
           ls -al
-          cd ./github
+          cd .github
           ls -al
           sudo ./.github/scripts/check-format.sh && sudo ./.github/scripts/check-changes.sh
 
