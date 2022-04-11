@@ -2,6 +2,10 @@ name: Release
 
 on: push
 
+env:
+  prueba: probando
+  pruebaRuta: %probando%/ruta
+
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
@@ -30,6 +34,11 @@ jobs:
           echo %ROOT_DIR%
           echo "voy a por QtBaseDir"
           echo %QtBaseDir%
+          echo "voy a por prueba"
+          echo %prueba%
+          echo "voy a por pruebaRuta"
+          echo %pruebaRuta%
+
 
   prepare-depencies:
     runs-on: windows-latest
@@ -40,5 +49,9 @@ jobs:
         shell: cmd
         run:
           echo %QtBaseDir%
+          echo "voy a por prueba"
+          echo %prueba%
+          echo "voy a por pruebaRuta"
+          echo %pruebaRuta%
           # ci\windows\install-qt-win.cmd
           # dir %QtBaseDir%
