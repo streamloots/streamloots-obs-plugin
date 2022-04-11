@@ -98,7 +98,7 @@ build:
 	$(MAKE) build-plugin-64
 	$(MAKE) package-windows
 	$(MAKE) package-windows
-	$(MAKE) move-to-obs-folder
+	# $(MAKE) move-to-obs-folder
 
 build-package:
 	$(MAKE) build
