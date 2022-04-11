@@ -28,9 +28,11 @@ jobs:
       - name: Install QT
         shell: cmd
         run:
-          echo "before"
-          dir %QtBaseDir%
           ci\windows\install-qt-win.cmd
-          echo "after"
-          dir %QtBaseDir%
+      - name: Upload assets to an artifact for next steps
+        uses: actions/upload-artifact@v2
+        with:
+          name: QT
+          path: ${{ github.workspace }}\deps\QT
+          retention-days: 1
           
