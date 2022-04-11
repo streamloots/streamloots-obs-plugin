@@ -7,12 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Generate zip
+      - name: Clean
         run: |
-          make build
+          rm -rf build32
+          rm -rf build64
+          rm -rf release
       - name: Upload assets to an artifact for next steps
         uses: actions/upload-artifact@v2
         with:
-          name: public
-          path: public
+          name: release
+          path: release
           retention-days: 5
