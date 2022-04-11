@@ -3,9 +3,9 @@ name: Release
 on: push
 
 env:
-  ROOT_DIR: ${{ GITHUB_WORKSPACE }}
-  DEPS_DIR: ${{ ROOT_DIR }}\deps
-  QtBaseDir: ${{ ROOT_DIR }}\deps\QT
+  ROOT_DIR: ${{ env.GITHUB_WORKSPACE }}
+  DEPS_DIR: ${{ env.ROOT_DIR }}\deps
+  QtBaseDir: ${{ env.ROOT_DIR }}\deps\QT
 
 concurrency:
   group: ${{ github.ref }}
