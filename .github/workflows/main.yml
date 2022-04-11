@@ -16,6 +16,7 @@ env:
   CPPWSPath: ${{ github.workspace }}\deps\websocketpp
   AsioPath: ${{ github.workspace }}\deps\asio
   buildFolder: ${{ github.workspace }}\deps\release
+  build_config: RelWithDebInfo
 
 concurrency:
   group: ${{ github.ref }}
@@ -31,13 +32,10 @@ jobs:
         run: ci\windows\install-qt-win.cmd
       - name: Download OBS deps
         shell: cmd
-        run: |
-          curl -o %DepsBasePath%.zip -kLO https://obsproject.com/downloads/dependencies2017.zip -f --retry 5 -C -
-          7z x %DepsBasePath%.zip -o%DepsBasePath%
-
-      # - name: Prepare OBS Windows
-      #   shell: cmd
-      #   run: ci\windows\prepare-obs-windows.cmd
+        run: ci\windows\download-obs-deps.cmd
+      - name: Prepare OBS Windows
+        shell: cmd
+        run: ci\windows\prepare-obs-windows.cmd
 
   # build-obs-32-dependencies:
   #   runs-on: windows-latest
