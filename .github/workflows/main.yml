@@ -38,13 +38,13 @@ jobs:
         run: |
           sudo chmod 755 .github/scripts/*.sh
           sudo .github/scripts/check-format.sh 
-          sudo .github/scripts/check-changes.sh
+          # sudo .github/scripts/check-changes.sh
 
-      - name: Install cmake-format
-        run: sudo pip install cmakelang
+      # - name: Install cmake-format
+      #   run: sudo pip install cmakelang
 
-      - name: Run cmake-format
-        run: sudo ./.github/scripts/check-cmake.sh
+      # - name: Run cmake-format
+      #   run: sudo ./.github/scripts/check-cmake.sh
           
 
 

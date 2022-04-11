@@ -41,20 +41,20 @@ else
     exit 1
 fi
 
-find . -type d \( \
-    -path ./\*build\* -o \
-    -path ./cmake -o \
-    -path ./deps -o \
-    -path ./plugins/decklink/\*/decklink-sdk -o \
-    -path ./plugins/enc-amf -o \
-    -path ./plugins/mac-syphon/syphon-framework -o \
-    -path ./plugins/obs-outputs/ftl-sdk -o \
-    -path ./plugins/obs-vst \
-\) -prune -false -type f -o \
-    -name '*.h' -or \
-    -name '*.hpp' -or \
-    -name '*.m' -or \
-    -name '*.m,' -or \
-    -name '*.c' -or \
-    -name '*.cpp' \
- | xargs -L100 -P ${NPROC} ${CLANG_FORMAT} ${VERBOSITY} -i -style=file -fallback-style=none
+# find . -type d \( \
+#     -path ./\*build\* -o \
+#     -path ./cmake -o \
+#     -path ./deps -o \
+#     -path ./plugins/decklink/\*/decklink-sdk -o \
+#     -path ./plugins/enc-amf -o \
+#     -path ./plugins/mac-syphon/syphon-framework -o \
+#     -path ./plugins/obs-outputs/ftl-sdk -o \
+#     -path ./plugins/obs-vst \
+# \) -prune -false -type f -o \
+#     -name '*.h' -or \
+#     -name '*.hpp' -or \
+#     -name '*.m' -or \
+#     -name '*.m,' -or \
+#     -name '*.c' -or \
+#     -name '*.cpp' \
+#  | xargs -L100 -P ${NPROC} ${CLANG_FORMAT} ${VERBOSITY} -i -style=file -fallback-style=none
