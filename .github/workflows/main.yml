@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
+          export prueba=1729
           SET ROOT_DIR=${GITHUB_WORKSPACE}
           SET DEPS_DIR=%ROOT_DIR%\deps
           SET QtBaseDir=%DEPS_DIR%\QT
@@ -19,6 +20,7 @@ jobs:
           echo %ROOT_DIR%
           echo %DEPS_DIR%
           echo %QtBaseDir%
+          echo %prueba%
 
           # ROOT_DIR=${GITHUB_WORKSPACE}
           # DEPS_DIR=${ROOT_DIR}\deps
@@ -54,5 +56,6 @@ jobs:
       - name: Install QT
         run:
           echo %QtBaseDir% 
+          echo %prueba%
           # ci\windows\install-qt-win.cmd
           # dir %QtBaseDir%
