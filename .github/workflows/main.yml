@@ -4,7 +4,7 @@ on: push
 
 env:
   prueba: probando
-  pruebaRuta: ${{ env.GITHUB_WORKSPACE }}/ruta
+  pruebaRuta: $GITHUB_WORKSPACE/ruta
 
 concurrency:
   group: ${{ github.ref }}
