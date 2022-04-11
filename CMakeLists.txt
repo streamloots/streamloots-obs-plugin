@@ -71,6 +71,8 @@ set(PLUGIN_HEADERS
 
  /!\ TAKE NOTE: No need to edit things past this point /!\
 
+# /!\ TAKE NOTE: No need to edit things past this point /!\
+
 find_package(libobs REQUIRED)
 find_package(obs-frontend-api REQUIRED)
 include(cmake/ObsPluginHelpers.cmake)
