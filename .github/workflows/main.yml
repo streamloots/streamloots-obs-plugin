@@ -4,14 +4,12 @@ on: push
 
 jobs:
   build-distributable:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Clean
         run: |
-          rm -rf build32
-          rm -rf build64
-          rm -rf release
+          make build
       - name: Upload assets to an artifact for next steps
         uses: actions/upload-artifact@v2
         with:
