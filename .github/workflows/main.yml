@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - shell: cmd
         run: |        
-          SET ROOT_DIR=$env:GITHUB_WORKSPACE
+          SET ROOT_DIR=%GITHUB_WORKSPACE%
           SET DEPS_DIR=%ROOT_DIR%\deps
           SET QtBaseDir=%DEPS_DIR%\QT
           SET QTDIR32=%QtBaseDir%\5.10.1\msvc2017
