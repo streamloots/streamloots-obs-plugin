@@ -14,11 +14,11 @@ jobs:
       - name: Display the path
         run: echo %PATH%
         shell: cmd
-      - run: |
+      - shell: cmd
+        run: |
           SET ROOT_DIR=${GITHUB_WORKSPACE}
           SET DEPS_DIR=%ROOT_DIR%\deps
           SET QtBaseDir=%DEPS_DIR%\QT
-          echo "action_state=yellow" | Out-File -FilePath $env:GITHUB_ENV -Append # no need for -Encoding utf8
 
           echo %ROOT_DIR%
           echo %DEPS_DIR%
@@ -59,6 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install QT
+        shell: cmd
         run:
           echo %QtBaseDir% 
           Write-Output "$ROOT_DIR"
