@@ -12,7 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          export prueba=1729
           SET ROOT_DIR=${GITHUB_WORKSPACE}
           SET DEPS_DIR=%ROOT_DIR%\deps
           SET QtBaseDir=%DEPS_DIR%\QT
