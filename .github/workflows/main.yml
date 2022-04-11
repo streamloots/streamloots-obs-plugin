@@ -65,7 +65,6 @@ jobs:
         with:
           path: 'src'
           submodules: 'recursive'
-
       - name: Checkout obs-studio
         uses: actions/checkout@v3
         with:
@@ -83,7 +82,7 @@ jobs:
       
       - name: Build Plugin
         # uses: ././plugin/.github/actions/build-plugin
-        uses: .github/actions/build-plugin
+        uses: ./.github/actions/build-plugin
         with:
           workingDirectory: ${{ github.workspace }}/src
           target: ${{ matrix.arch }}
