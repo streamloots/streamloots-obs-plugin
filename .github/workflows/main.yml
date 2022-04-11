@@ -2,17 +2,23 @@ name: Release
 
 on: push
 
+env:
+  ROOT_DIR: ${{ GITHUB_WORKSPACE }}
+  DEPS_DIR: ${{ ROOT_DIR }}\deps
+  QtBaseDir: ${{ ROOT_DIR }}\deps\QT
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-distributable:
-    runs-on: windows-latest
+  prepare-dependencies:
+    runs-on: window-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Clean
+      - name: Install qt
         run: |
-          make build
-      - name: Upload assets to an artifact for next steps
-        uses: actions/upload-artifact@v2
-        with:
-          name: release
-          path: release
-          retention-days: 5
+          echo "ROOT_DIR=${{ ROOT_DIR }}"
+          echo "DEPS_DIR=${{ DEPS_DIR }}"
+          echo "QtBaseDir=${{ QtBaseDir }}"
+          
