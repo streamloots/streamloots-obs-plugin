@@ -17,44 +17,31 @@ env:
   AsioPath: ${{ github.workspace }}\deps\asio
   buildFolder: ${{ github.workspace }}\deps\release
   build_config: RelWithDebInfo
+  PLUGIN_NAME: obs-streamloots
 
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  prepare-dependencies:
-    runs-on: windows-latest
+  clang_check:
+    name: 01 - Code Format Check
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: 'Add msbuild to PATH'
-        uses: microsoft/setup-msbuild@v1.1
-      - name: Install QT
-        shell: cmd
-        run: ci\windows\install-qt-win.cmd
-      - name: Download OBS deps
-        shell: cmd
-        run: ci\windows\download-obs-deps.cmd
-      - name: Prepare OBS Windows
-        shell: cmd
-        run: ci\windows\prepare-obs-windows.cmd
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format-12
+      - name: Run clang-format
+        run: ./.github/scripts/check-format.sh && ./.github/scripts/check-changes.sh
 
-  build-obs-32-dependencies:
-    runs-on: windows-latest
-    needs: [prepare-dependencies]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
-      - name: Build OBS 32
-        shell: cmd
-        run: |
-          echo %OBSPath%
-          echo %build_config%
-          cd %OBSPath%
-          dir
-          cd build32
-          dir
+      - name: Install cmake-format
+        run: sudo pip install cmakelang
+
+      - name: Run cmake-format
+        run: ./.github/scripts/check-cmake.sh
           
 
 
