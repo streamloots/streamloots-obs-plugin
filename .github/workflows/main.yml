@@ -82,7 +82,7 @@ jobs:
       
       - name: Build Plugin
         # uses: ././plugin/.github/actions/build-plugin
-        uses: ../.github/actions/build-plugin
+        uses: ././src/.github/actions/build-plugin
         with:
           workingDirectory: ${{ github.workspace }}/src
           target: ${{ matrix.arch }}

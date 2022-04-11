@@ -26,35 +26,8 @@ inputs:
     default: ${{ github.workspace }}
 runs:
   using: 'composite'
-  steps:
-    - name: Run macOS Build
-      if: ${{ runner.os == 'macOS' }}
-      shell: zsh {0}
-      env:
-        CODESIGN_IDENT: ${{ inputs.codesignIdent }}
-      run: |
-        build_args=(
-          -c ${{ inputs.config }}
-          -t macos-${{ inputs.target }}
-        )
-
-        if [[ '${{ inputs.codesign }}' == 'true' ]] build_args+=(-s)
-
-        ${{ inputs.workingDirectory }}/.github/scripts/build-macos.zsh ${build_args}
-
-    - name: Run Linux Build
-      if: ${{ runner.os == 'Linux' }}
-      shell: bash
-      run: |
-        build_args=(
-          -c ${{ inputs.config }}
-          -t linux-${{ inputs.target }}
-        )
-
-        ${{ inputs.workingDirectory }}/.github/scripts/build-linux.sh ${build_args[@]}
-
+  steps:    
     - name: Run Windows Build
-      if: ${{ runner.os == 'Windows' }}
       shell: pwsh
       run: |
         $BuildArgs = @{
