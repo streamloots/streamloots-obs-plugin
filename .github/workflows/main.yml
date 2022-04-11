@@ -37,14 +37,16 @@ jobs:
         shell: cmd
         run: ci\windows\prepare-obs-windows.cmd
 
-  # build-obs-32-dependencies:
-  #   runs-on: windows-latest
-  #   needs: [prepare-dependencies]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Build OBS 32
-  #       shell: cmd
-  #       run: ci\windows\install-qt-win.cmd
+  build-obs-32-dependencies:
+    runs-on: windows-latest
+    needs: [prepare-dependencies]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Build OBS 32
+        shell: cmd
+        run: msbuild /m /p:Configuration=%build_config% %OBSPath%\build32\obs-studio.sln
 
 
           
