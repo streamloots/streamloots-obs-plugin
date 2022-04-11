@@ -15,13 +15,10 @@ jobs:
           SET ROOT_DIR=${GITHUB_WORKSPACE}
           SET DEPS_DIR=%ROOT_DIR%\deps
           SET QtBaseDir=%DEPS_DIR%\QT
-          PRUEBA_2:=asdasdsa
 
           echo %ROOT_DIR%
           echo %DEPS_DIR%
           echo %QtBaseDir%
-          echo %prueba%
-          echo %PRUEBA_2%
 
           # ROOT_DIR=${GITHUB_WORKSPACE}
           # DEPS_DIR=${ROOT_DIR}\deps
