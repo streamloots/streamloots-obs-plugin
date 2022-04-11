@@ -3,55 +3,34 @@ name: Release
 on: push
 
 env:
-  prueba: ${{ github.workspace }} 
-  pruebaRuta: ${{ github.workspace }}/ruta
+  ROOT_DIR: ${{ github.workspace }} 
+  DEPS_DIR: ${{ github.workspace }}\deps
+  QtBaseDir: ${{ github.workspace }}\deps\QT
+  QTDIR32: ${{ github.workspace }}\deps\QT\5.10.1\msvc2017
+  QTDIR64: ${{ github.workspace }}\deps\QT\5.10.1\msvc2017_64
+  CMAKE_PREFIX_PATH:  ${{ github.workspace }}\deps\QT\5.10.1\msvc2017\lib\cmake\Qt5Widgets
+  OBSDepsBasePath: ${{ github.workspace }}\deps\dependencies2019
+  DepsPath64: ${{ github.workspace }}\deps\dependencies2019\win64
+  OBSPath: ${{ github.workspace }}\deps\obs-studio
+  CPPWSPath: ${{ github.workspace }}\deps\websocketpp
+  AsioPath: ${{ github.workspace }}\deps\asio
+  buildFolder: ${{ github.workspace }}\deps\release
 
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  set-env-variables:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - shell: cmd
-        run: |        
-          SET ROOT_DIR=%GITHUB_WORKSPACE%
-          SET DEPS_DIR=%ROOT_DIR%\deps
-          SET QtBaseDir=%DEPS_DIR%\QT
-          SET QTDIR32=%QtBaseDir%\5.10.1\msvc2017
-          SET QTDIR64=%QtBaseDir%\5.10.1\msvc2017_64
-          SET CMAKE_PREFIX_PATH=%QTDIR32%\lib\cmake\Qt5Widgets
-          SET OBSDepsBasePath=%DEPS_DIR%\dependencies2019
-          SET DepsPath64=%OBSDepsBasePath%\win64
-          SET OBSPath=%DEPS_DIR%\obs-studio
-          SET CPPWSPath=%DEPS_DIR%\websocketpp
-          SET AsioPath=%DEPS_DIR%\asio
-          SET buildFolder=%ROOT_DIR%\release
-
-          echo "voy a por root"
-          echo %ROOT_DIR%
-          echo "voy a por QtBaseDir"
-          echo %QtBaseDir%
-          echo "voy a por prueba"
-          echo %prueba%
-          echo "voy a por pruebaRuta"
-          echo %pruebaRuta%
-
-
   prepare-depencies:
     runs-on: windows-latest
-    needs: [set-env-variables]
     steps:
       - uses: actions/checkout@v3
       - name: Install QT
         shell: cmd
         run:
-          echo %QtBaseDir%
-          echo "voy a por prueba"
-          echo %prueba%
-          echo "voy a por pruebaRuta"
-          echo %pruebaRuta%
-          # ci\windows\install-qt-win.cmd
-          # dir %QtBaseDir%
+          echo "before"
+          dir %QtBaseDir%
+          ci\windows\install-qt-win.cmd
+          echo "after"
+          dir %QtBaseDir%
+          
