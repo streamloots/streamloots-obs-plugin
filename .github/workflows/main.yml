@@ -46,7 +46,14 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
       - name: Build OBS 32
         shell: cmd
-        run: msbuild /m /p:Configuration=%build_config% %OBSPath%\build32\obs-studio.sln
+        run: |
+          echo %OBSPath%
+          echo %build_config%
+          cd %OBSPath%
+          dir
+          cd build32
+          dir
+          
 
 
           
