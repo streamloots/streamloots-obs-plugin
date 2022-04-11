@@ -27,6 +27,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+      - name: 'Add msbuild to PATH'
+        uses: microsoft/setup-msbuild@v1.1
       - name: Install QT
         shell: cmd
         run: ci\windows\install-qt-win.cmd
