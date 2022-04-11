@@ -45,6 +45,94 @@ jobs:
 
       - name: Run cmake-format
         run: sudo ./.github/scripts/check-cmake.sh
+
+  windows_build:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        arch: ['x86', 'x64']
+    if: always()
+    needs: [clang_check]
+    # outputs:
+    #   commitHash: ${{ steps.setup.outputs.commitHash }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: 'src'
+          submodules: 'recursive'
+
+      - name: Checkout obs-studio
+        uses: actions/checkout@v3
+        with:
+          repository: 'obsproject/obs-studio'
+          path: 'obs-studio'
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      # - name: Setup Environment
+      #   working-directory: ${{ github.workspace }}/plugin
+      #   id: setup
+      #   run: |
+      #     $CommitHash = git rev-parse --short HEAD
+      #     Write-Output "::set-output name=commitHash::${CommitHash}"
+      # - name: Check for GitHub Labels
+      #   id: seekingTesters
+      #   working-directory: ${{ github.workspace }}/plugin
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   run: |
+      #     $LabelFound = try {
+      #       $Params = @{
+      #         Authentication = 'Bearer'
+      #         Token = (ConvertTo-SecureString '${{ secrets.GITHUB_TOKEN }}' -AsPlainText)
+      #         Uri = '${{ github.event.pull_request.url }}'
+      #         UseBasicParsing = $true
+      #       }
+      #       (Invoke-RestMethod @Params).labels.name.contains("Seeking Testers")
+      #     } catch {
+      #       $false
+      #     }
+      #     Write-Output "::set-output name=found::$(([string]${LabelFound}).ToLower())"
+      # - name: Build Plugin
+      #   uses: ././plugin/.github/actions/build-plugin
+      #   with:
+      #     workingDirectory: ${{ github.workspace }}/plugin
+      #     target: ${{ matrix.arch }}
+      #     config: RelWithDebInfo
+      #     visualStudio: 'Visual Studio 17 2022'
+
+      # - name: Package Plugin
+      #   uses: ./plugin/.github/actions/package-plugin
+      #   with:
+      #     workingDirectory: ${{ github.workspace }}/plugin
+      #     target: ${{ matrix.arch }}
+      #     config: RelWithDebInfo
+
+      # - name: Upload Build Artifact
+      #   if: ${{ success() && (github.event_name != 'pull_request' || steps.seekingTesters.outputs.found == 'true') }}
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}
+      #     path: ${{ github.workspace }}/plugin/release/${{ env.PLUGIN_NAME }}-*.zip
+
+      # - name: Package Plugin Installer
+      #   if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
+      #   uses: ././plugin/.github/actions/package-plugin
+      #   with:
+      #     workingDirectory: ${{ github.workspace }}/plugin
+      #     target: ${{ matrix.arch }}
+      #     config: RelWithDebInfo
+      #     createInstaller: 'true'
+
+      # - name: Upload Installer Artifact
+      #   if: ${{ startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request' }}
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: ${{ env.PLUGIN_NAME }}-windows-${{ matrix.arch }}-${{ steps.setup.outputs.commitHash }}-installer
+      #     path: ${{ github.workspace }}/plugin/release/${{ env.PLUGIN_NAME }}-*.exe
           
 
 
