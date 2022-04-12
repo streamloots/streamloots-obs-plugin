@@ -18,6 +18,9 @@ set(LINUX_MAINTAINER_EMAIL "engineering@streamloots.com")
 
 # Add your custom source files here - header files are optional and only
 # required for visibility e.g. in Xcode or Visual Studio
+# === boost ===
+find_package(Boost REQUIRED COMPONENTS filesystem system thread regex)
+
 # === websocket++ ===
 FetchContent_Declare(websocketpp
 GIT_REPOSITORY https://github.com/zaphoyd/websocketpp.git
