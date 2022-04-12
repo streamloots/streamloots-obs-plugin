@@ -6,6 +6,12 @@
             "branch": "master",
             "hash": "13f2d7925ff49938e3b286a3b9a65d50c1491ec1"
         },
+        "websocketpp": {
+            "version": "0.8.2",
+            "repository": "https://github.com/zaphoyd/websocketpp",
+            "branch": "master",
+            "hash": "56123c87598f8b1dd471be83ca841ceae07f95ba"
+        },
         "obs-deps": {
             "windows-x64": {
                 "version": "2022-03-16",
