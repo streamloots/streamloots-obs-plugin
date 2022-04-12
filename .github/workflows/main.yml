@@ -39,9 +39,9 @@ jobs:
           submodules: 'recursive'
       - name: Test
         run: |
-          ls -a
+          dir
           cd websocketpp
-          ls -a
+          dir
 
 
   # clang_check:
