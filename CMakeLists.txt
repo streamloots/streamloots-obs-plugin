@@ -19,9 +19,9 @@ set(LINUX_MAINTAINER_EMAIL "engineering@streamloots.com")
 # Add your custom source files here - header files are optional and only
 # required for visibility e.g. in Xcode or Visual Studio
 include(${CMAKE_SOURCE_DIR}/websocketpp/cmake/CMakeHelpers.cmake)
-add_subdirectory(${CMAKE_SOURCE_DIR}/websocketpp/websocketpp)
+add_subdirectory(${CMAKE_SOURCE_DIR}/websocketpp)
 add_library(Websockets INTERFACE)
-target_include_directories(Websockets INTERFACE ${CMAKE_SOURCE_DIR}/websocketpp/websocketpp)
+target_include_directories(Websockets INTERFACE ${CMAKE_SOURCE_DIR}/websocketpp)
 target_link_libraries(Websockets INTERFACE Boost::system Boost::thread Boost::regex)
 
 target_sources(${CMAKE_PROJECT_NAME}
