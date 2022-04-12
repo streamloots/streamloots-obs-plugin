@@ -63,13 +63,13 @@ jobs:
         with:
           path: 'plugin'
           submodules: 'recursive'
-      # - name: Checkout obs-studio
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: 'obsproject/obs-studio'
-      #     path: 'obs-studio'
-      #     fetch-depth: 0
-      #     submodules: 'recursive'
+      - name: Checkout obs-studio
+        uses: actions/checkout@v3
+        with:
+          repository: 'obsproject/obs-studio'
+          path: 'obs-studio'
+          fetch-depth: 0
+          submodules: 'recursive'
       - name: Checkout websocketpp
         uses: actions/checkout@v3
         with:
@@ -77,24 +77,19 @@ jobs:
           path: 'plugin/websocketpp'
           fetch-depth: 0
           submodules: 'recursive'
-      - name: Test
+      - name: Setup Environment
+        working-directory: ${{ github.workspace }}/plugin
+        id: setup
         run: |
-          dir
-
-      # - name: Setup Environment
-      #   working-directory: ${{ github.workspace }}/plugin
-      #   id: setup
-      #   run: |
-      #     $CommitHash = git rev-parse --short HEAD
-      #     Write-Output "::set-output name=commitHash::${CommitHash}"
-      
-      # - name: Build Plugin
-      #   uses: ././plugin/.github/actions/build-plugin
-      #   with:
-      #     workingDirectory: ${{ github.workspace }}/plugin
-      #     target: ${{ matrix.arch }}
-      #     config: RelWithDebInfo
-      #     visualStudio: 'Visual Studio 17 2022'
+          $CommitHash = git rev-parse --short HEAD
+          Write-Output "::set-output name=commitHash::${CommitHash}"      
+      - name: Build Plugin
+        uses: ././plugin/.github/actions/build-plugin
+        with:
+          workingDirectory: ${{ github.workspace }}/plugin
+          target: ${{ matrix.arch }}
+          config: RelWithDebInfo
+          visualStudio: 'Visual Studio 17 2022'
 
       # - name: Package Plugin
       #   uses: ./plugin/.github/actions/package-plugin
