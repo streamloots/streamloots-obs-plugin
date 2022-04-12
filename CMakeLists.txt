@@ -18,7 +18,8 @@ set(LINUX_MAINTAINER_EMAIL "engineering@streamloots.com")
 
 # Add your custom source files here - header files are optional and only
 # required for visibility e.g. in Xcode or Visual Studio
-target_include_directories(${CMAKE_SOURCE_DIR}/websocketpp/websocketpp)
+target_include_directories(${CMAKE_PROJECT_NAME}
+                          PRIVATE ${CMAKE_SOURCE_DIR}/websocketpp/websocketpp)
 
 target_sources(${CMAKE_PROJECT_NAME}
   PRIVATE
