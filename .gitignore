@@ -3,6 +3,8 @@
 /build/
 /build32/
 /build64/
+/build_x86/
+/plugin_x86/
 /release/
 /installer/Output/
 
