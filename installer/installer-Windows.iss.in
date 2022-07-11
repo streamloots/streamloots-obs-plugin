@@ -25,7 +25,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "..\release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\LICENSE"; Flags: dontcopy
+;Source: "..\LICENSE"; Flags: dontcopy
+Source: "..\TERMS"; Flags: dontcopy
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -35,15 +36,15 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 [Code]
 procedure InitializeWizard();
 var
-  GPLText: AnsiString;
+  TermsText: AnsiString;
   Page: TOutputMsgMemoWizardPage;
 begin
-  ExtractTemporaryFile('LICENSE');
-  LoadStringFromFile(ExpandConstant('{tmp}\LICENSE'), GPLText);
+ ExtractTemporaryFile('TERMS');
+ LoadStringFromFile(ExpandConstant('{tmp}\TERMS'), TermsText);
   Page := CreateOutputMsgMemoPage(wpWelcome,
-    'License Information', 'Please review the license terms before installing {#MyAppName}',
+    'Terms and Conditions Information', 'Please review the terms and conditions before installing {#MyAppName}',
     'Press Page Down to see the rest of the agreement. Once you are aware of your rights, click Next to continue.',
-    String(GPLText)
+    String(TermsText)
   );
 end;
 
