@@ -91,7 +91,7 @@ jobs:
               UseBasicParsing = $true
             }
 
-            (Invoke-RestMethod @Params).labels.name.contains('Seeking Testers')
+            (Invoke-RestMethod @Params).labels.name.contains('seeking testers')
           } catch {
             $false
           }
