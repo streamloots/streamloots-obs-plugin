@@ -1,4 +1,0 @@
-7z
-cmake
-make
-https://jrsoftware.org/ add to path
