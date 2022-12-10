@@ -3,6 +3,7 @@
 
 using requests::RotateCameraRequest;
 
-RotateCameraRequest::RotateCameraRequest(obs_data_t *request): RequestBase(request) {
-    seconds=getMetadataSeconds(metadata);
+RotateCameraRequest::RotateCameraRequest(obs_data_t *request) : RequestBase(request)
+{
+	seconds = getMetadataSeconds(metadata);
 }

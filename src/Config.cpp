@@ -1,12 +1,12 @@
 #include <obs-frontend-api.h>
 
-#include <QtCore/QObject>
-#include <QtCore/QCryptographicHash>
-#include <QtCore/QTime>
-#include <QtWidgets/QSystemTrayIcon>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QInputDialog>
-#include <QtWidgets/QMessageBox>
+#include <QObject>
+#include <QCryptographicHash>
+#include <QTime>
+#include <QSystemTrayIcon>
+#include <QMainWindow>
+#include <QInputDialog>
+#include <QMessageBox>
 
 #define PARAM_MONITORING "MonitoringType"
 #define PARAM_VOLUME "Volume"
@@ -16,9 +16,7 @@
 
 #define QT_TO_UTF8(str) str.toUtf8().constData()
 
-Config::Config() : MonitoringType(OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT),
-				   Volume(100.0),
-				   SettingsLoaded(false)
+Config::Config() : MonitoringType(OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT), Volume(100.0), SettingsLoaded(false)
 {
 	SetDefaults();
 }
@@ -43,9 +41,9 @@ void Config::Save()
 void Config::SetDefaults()
 {
 	config_t *obsConfig = GetConfigStore();
-	if (obsConfig)
-	{
-		config_set_default_int(obsConfig, SECTION_NAME, PARAM_MONITORING, OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT);
+	if (obsConfig) {
+		config_set_default_int(obsConfig, SECTION_NAME, PARAM_MONITORING,
+				       OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT);
 		config_set_default_double(obsConfig, SECTION_NAME, PARAM_VOLUME, 100.0);
 	}
 }
@@ -59,11 +57,10 @@ void Config::MigrateFromGlobalSettings()
 {
 	config_t *source = obs_frontend_get_global_config();
 	config_t *destination = obs_frontend_get_profile_config();
-	if (config_has_user_value(source, SECTION_NAME, PARAM_MONITORING))
-	{
+	if (config_has_user_value(source, SECTION_NAME, PARAM_MONITORING)) {
 		int value = config_get_int(source, SECTION_NAME, PARAM_MONITORING);
 		double volume = config_get_double(source, SECTION_NAME, PARAM_MONITORING);
-		
+
 		config_set_int(destination, SECTION_NAME, PARAM_MONITORING, value);
 		config_remove_value(source, SECTION_NAME, PARAM_MONITORING);
 

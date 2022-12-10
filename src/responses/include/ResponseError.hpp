@@ -4,15 +4,15 @@
 #include "./Response.hpp"
 
 namespace responses {
-    class ResponseError : public Response {
-        public:
-            const char * error;
+class ResponseError : public Response {
+public:
+	const char *error;
 
-            ResponseError(std::string error);
-            ResponseError(std::string error, std::string messageId);
+	ResponseError(std::string error);
+	ResponseError(std::string error, std::string messageId);
 
-            virtual std::string toJson();
-    };
+	virtual std::string toJson();
+};
 }
 
 #endif

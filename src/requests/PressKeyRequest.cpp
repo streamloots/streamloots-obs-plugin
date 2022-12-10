@@ -2,4 +2,4 @@
 
 using requests::PressKeyRequest;
 
-PressKeyRequest::PressKeyRequest(obs_data_t *request): RequestBase(request) {}
+PressKeyRequest::PressKeyRequest(obs_data_t *request) : RequestBase(request) {}
