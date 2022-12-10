@@ -1,15 +1,16 @@
 
 #pragma once
+
 #include <windows.h> //different header file in linux
 #include <future>
+
 using namespace std;
 
-template <typename... ParamTypes>
-void setTimeOut(int milliseconds, std::function<void(ParamTypes...)> func, ParamTypes... parames)
+template<typename... ParamTypes>
+void setTimeOut(int milliseconds, std::function<void(ParamTypes...)> func, ParamTypes... params)
 {
-    std::async(std::launch::async, [=]()
-               {
-                   Sleep(milliseconds);
-                   func(parames...);
-               });
+	static_cast<void>(std::async(std::launch::async, [=]() {
+		Sleep(milliseconds);
+		func(params...);
+	}));
 }

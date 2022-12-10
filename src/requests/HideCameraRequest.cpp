@@ -3,6 +3,7 @@
 
 using requests::HideCameraRequest;
 
-HideCameraRequest::HideCameraRequest(obs_data_t *request): RequestBase(request) {
-    seconds=getMetadataSeconds(metadata);
+HideCameraRequest::HideCameraRequest(obs_data_t *request) : RequestBase(request)
+{
+	seconds = getMetadataSeconds(metadata);
 }
