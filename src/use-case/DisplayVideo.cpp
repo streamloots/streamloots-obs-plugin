@@ -18,20 +18,22 @@ Response DisplayVideo::invoke(obs_data_t *baseRequest)
 	DisplayVideoRequest request(baseRequest);
 
 	blog(LOG_INFO, "Video url to display %s seconds:%d", request.url, request.seconds);
+	
 	obs_data_t *settings = obs_data_create();
-
 	obs_data_set_string(settings, "input", request.url);
 	obs_data_set_bool(settings, "clear_on_media_end", true);
 	obs_data_set_bool(settings, "looping", false);
 	obs_data_set_bool(settings, "is_local_file", false);
 
+	DisplayVideo::set_source_full_screen(settings);
+
 	obs_source_t *source =
 		obs_source_create("ffmpeg_source", request.messageId.toStdString().c_str(), settings, NULL);
+	
 	configure_settings(source);
-
+	
 	auto scene_item = add_source_to_current_scene(source);
-	DisplayVideo::set_source_full_screen(scene_item);
-
+	
 	std::function<void()> func1 = [&]() {
 		blog(LOG_INFO, "deleting source", request.url);
 		obs_sceneitem_remove(scene_item);
