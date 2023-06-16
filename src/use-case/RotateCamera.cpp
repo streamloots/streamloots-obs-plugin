@@ -22,13 +22,13 @@ Response RotateCamera::invoke(obs_data_t *baseRequest)
 		auto name = obs_data_get_string(item, "sourceName");
 		QString kind = obs_data_get_string(item, "sourceKind");
 		if (kind == "dshow_input") {
-			rotate_source(name, request.seconds);
+			RotateCamera::source_rotate(name, request.seconds);
 		}
 	}
 
 	return Response(request.messageId.toStdString());
 }
-void RotateCamera::rotate_source(const char *name, int seconds)
+void RotateCamera::source_rotate(const char *name, int seconds)
 {
 	blog(LOG_INFO, "rotating camera of source: %s", name);
 	obs_source_t *source = obs_get_source_by_name(name);

@@ -9,7 +9,7 @@ public:
 	static responses::Response invoke(obs_data_t *baseRequest);
 
 private:
-	static void hideSceneItem(const char *name, int seconds);
+	static void sceneitem_hide_and_show(const char *name, int seconds);
 };
 }
 

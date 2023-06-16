@@ -9,7 +9,7 @@ public:
 	static responses::Response invoke(obs_data_t *baseRequest);
 
 private:
-	static inline void rotate_source(const char *name, int seconds);
+	static void source_rotate(const char *name, int seconds);
 };
 }
 

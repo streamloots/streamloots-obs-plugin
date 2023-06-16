@@ -24,14 +24,14 @@ Response HideCamera::invoke(obs_data_t *baseRequest)
 		auto name = obs_data_get_string(item, "sourceName");
 		QString kind = obs_data_get_string(item, "sourceKind");
 		if (kind == "dshow_input") {
-			hideSceneItem(name, request.seconds);
+			HideCamera::sceneitem_hide_and_show(name, request.seconds);
 		}
 	}
 
 	return Response(request.messageId.toStdString());
 }
 
-void HideCamera::hideSceneItem(const char *name, int seconds)
+void HideCamera::sceneitem_hide_and_show(const char *name, int seconds)
 {
 	auto scene_item = getSceneItemInScene(name);
 
