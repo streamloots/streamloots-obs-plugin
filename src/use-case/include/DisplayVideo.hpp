@@ -9,8 +9,9 @@ public:
 	static responses::Response invoke(obs_data_t *baseRequest);
 
 private:
-	static void set_source_full_screen(obs_sceneitem_t *source);
 	static void configure_settings(obs_source_t *source);
+	static void sceneitem_snooze_and_remove(obs_source_t *source, obs_sceneitem_t *scene_item, int seconds);
+	static void set_source_full_screen(obs_sceneitem_t *source);
 };
 }
 

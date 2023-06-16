@@ -18,13 +18,13 @@ inline obs_scene_t *get_current_scene()
 	if (!scene_source) {
 		blog(LOG_INFO, "No current scene");
 		return nullptr;
-	} else {
-		blog(LOG_INFO, "current scene found");
-		const char *name = obs_source_get_name(scene_source);
-		blog(LOG_INFO, "Current scene %s", name);
-		obs_scene_t *scene = obs_scene_from_source(scene_source);
-		return scene;
 	}
+	blog(LOG_INFO, "current scene found");
+	const char *name = obs_source_get_name(scene_source);
+	blog(LOG_INFO, "Current scene %s", name);
+	obs_scene_t *scene = obs_scene_from_source(scene_source);
+	obs_source_release(scene_source);
+	return scene;
 }
 
 inline obs_sceneitem_t *add_source_to_scene(obs_scene_t *scene, obs_source_t *source)
@@ -33,21 +33,21 @@ inline obs_sceneitem_t *add_source_to_scene(obs_scene_t *scene, obs_source_t *so
 	obs_sceneitem_t *scene_item = obs_scene_add(scene, source);
 	if (!scene_item) {
 		blog(LOG_INFO, "Cannot add item");
+		return nullptr;
 	}
-
 	return scene_item;
 }
 
 inline obs_sceneitem_t *add_source_to_current_scene(obs_source_t *source)
 {
 	obs_scene_t *scene = get_current_scene();
-	if (scene) {
-		blog(LOG_INFO, "ok scene current");
-		const char *name = obs_source_get_name(source);
-		blog(LOG_INFO, "New source name  %s", name);
-		return add_source_to_scene(scene, source);
+	if (!scene) {
+		return nullptr;
 	}
-	return nullptr;
+	blog(LOG_INFO, "ok scene current");
+	const char *name = obs_source_get_name(source);
+	blog(LOG_INFO, "New source name  %s", name);
+	return add_source_to_scene(scene, source);
 }
 
 inline bool on_item_iterate(void * /*privateData*/, obs_source_t *source)

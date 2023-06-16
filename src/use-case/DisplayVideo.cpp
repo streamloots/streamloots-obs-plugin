@@ -18,27 +18,40 @@ Response DisplayVideo::invoke(obs_data_t *baseRequest)
 	DisplayVideoRequest request(baseRequest);
 
 	blog(LOG_INFO, "Video url to display %s seconds:%d", request.url, request.seconds);
-	obs_data_t *settings = obs_data_create();
 
+	obs_data_t *settings = obs_data_create();
 	obs_data_set_string(settings, "input", request.url);
 	obs_data_set_bool(settings, "clear_on_media_end", true);
 	obs_data_set_bool(settings, "looping", false);
 	obs_data_set_bool(settings, "is_local_file", false);
 
 	obs_source_t *source =
-		obs_source_create("ffmpeg_source", request.messageId.toStdString().c_str(), settings, NULL);
+		obs_source_create("ffmpeg_source", request.messageId.toStdString().c_str(), settings, nullptr);
+
 	configure_settings(source);
 
 	auto scene_item = add_source_to_current_scene(source);
+
 	DisplayVideo::set_source_full_screen(scene_item);
 
-	std::function<void()> func1 = [&]() {
-		blog(LOG_INFO, "deleting source", request.url);
+	DisplayVideo::sceneitem_snooze_and_remove(source, scene_item, request.seconds);
+
+	obs_data_release(settings);
+
+	return Response(request.messageId.toStdString());
+}
+
+void DisplayVideo::sceneitem_snooze_and_remove(obs_source_t *source, obs_sceneitem_t *scene_item, int seconds)
+{
+	std::function<void()> func1 = [source, scene_item]() {
+		blog(LOG_INFO, "Deleting source");
 		obs_sceneitem_remove(scene_item);
+		obs_source_remove(source);
+		obs_sceneitem_release(scene_item);
+		obs_source_release(source);
 	};
 
-	setTimeOut(request.seconds * 1000, func1);
-	return Response(request.messageId.toStdString());
+	setTimeOut(seconds * 1000, func1);
 }
 
 void DisplayVideo::configure_settings(obs_source_t *source)
