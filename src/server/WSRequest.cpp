@@ -1,4 +1,4 @@
-#include <QtCore/QString>
+#include <QString>
 #include "../plugin-macros.generated.h"
 #include "../use-case/include/UseCaseManager.hpp"
 #include "../requests/include/RequestBase.hpp"
@@ -22,7 +22,7 @@ string WSRequest::processMessage(string message)
 
 	obs_data_t *data = obs_data_create_from_json(msg);
 	string error = validateData(message, data);
-	if(error != NO_VALIDATION_ERROR){
+	if (error != NO_VALIDATION_ERROR) {
 		return error;
 	}
 
@@ -32,24 +32,21 @@ string WSRequest::processMessage(string message)
 
 string WSRequest::validateData(string message, obs_data_t *data)
 {
-	if (!data)
-	{
-		blog(LOG_ERROR, "invalid JSON payload received for %s", message);
+	if (!data) {
+		blog(LOG_ERROR, "invalid JSON payload received for %s", message.c_str());
 		ResponseError error("invalid JSON payload received for: " + message);
 		return error.toJson();
 	}
 
-	if (!obs_data_has_user_value(data, "message-id"))
-	{
+	if (!obs_data_has_user_value(data, "message-id")) {
 		blog(LOG_ERROR, "missing message-id");
 		ResponseError error("missing message-id");
 		return error.toJson();
 	}
 
-	if (!obs_data_has_user_value(data, "request-type"))
-	{
+	if (!obs_data_has_user_value(data, "request-type")) {
 		QString messageId = obs_data_get_string(data, "message-id");
-		blog(LOG_ERROR, "missing request-type on message: %s", messageId.toStdString());
+		blog(LOG_ERROR, "missing request-type on message: %s", messageId.toStdString().c_str());
 		ResponseError error("missing request-type", messageId.toStdString());
 		return error.toJson();
 	}

@@ -1,21 +1,23 @@
 #pragma once
 
+#include <QString>
+#include <QSharedPointer>
+
 #include <obs-frontend-api.h>
-#include <QtCore/QString>
-#include <QtCore/QSharedPointer>
+
 #include <util/config-file.h>
 
 class Config {
-	public:
-		Config();
-		void Load();
-		void Save();
-		void SetDefaults();
-		config_t* GetConfigStore();
-        
-		void MigrateFromGlobalSettings();
+public:
+	Config();
+	void Load();
+	void Save();
+	void SetDefaults();
+	config_t *GetConfigStore();
 
-		int MonitoringType;
-		double Volume;
-		bool SettingsLoaded;
+	void MigrateFromGlobalSettings();
+
+	int MonitoringType;
+	double Volume;
+	bool SettingsLoaded;
 };

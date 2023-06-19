@@ -10,31 +10,31 @@
 using websocketpp::connection_hdl;
 
 namespace server {
-    typedef websocketpp::server<websocketpp::config::asio> server;
-    typedef server::message_ptr message_ptr;
+typedef websocketpp::server<websocketpp::config::asio> server;
+typedef server::message_ptr message_ptr;
 
-    class WSServer{
+class WSServer {
 
-        public:
-            explicit WSServer();
-            virtual ~WSServer();
-            void start();
-            void stop();
+public:
+	explicit WSServer();
+	virtual ~WSServer();
+	void start();
+	void stop();
 
-        private:
-            const static int START_PORT;
-            const static int END_PORT;
-            server _server;
-            std::thread _serverThread;
-            int _serverPort;
-            std::map<QString, connection_hdl> _connectionList;
+private:
+	const static int START_PORT;
+	const static int END_PORT;
+	server _server;
+	std::thread _serverThread;
+	int _serverPort;
+	std::map<QString, connection_hdl> _connectionList;
 
-            void onOpen(connection_hdl hdl);
-            void onClose(connection_hdl hdl);
-            void onMessage(connection_hdl hdl, message_ptr msg);
-            QString getRemoteEndpoint(connection_hdl hdl);
+	void onOpen(connection_hdl hdl);
+	void onClose(connection_hdl hdl);
+	void onMessage(connection_hdl hdl, message_ptr msg);
+	QString getRemoteEndpoint(connection_hdl hdl);
 
-            void serverRunner();
-    };
+	void serverRunner();
+};
 }
 #endif

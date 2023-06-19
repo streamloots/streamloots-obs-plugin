@@ -1,18 +1,14 @@
-*~
+!deps/.gitkeep
 .DS_Store
+.idea
+.vscode
+*.generated.*
+**/.Brewfile.lock.json
+*~
+/build_*/
 /build/
-/build32/
-/build64/
-/build_x86/
+/installer/Output/
 /plugin_x86/
 /release/
-/installer/Output/
-
-.vscode
-.idea
-
-# ignore generated files
-*.generated.*
 deps
-!deps/.gitkeep
 package

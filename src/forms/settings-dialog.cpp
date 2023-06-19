@@ -1,30 +1,26 @@
 #include "settings-dialog.h"
 
-#include <obs-frontend-api.h>
-#include <obs-module.h>
-#include <QtWidgets/QMessageBox>
+#include <QMessageBox>
 #include <QComboBox>
 
-#include "../Config.hpp"
-#include "../plugin-macros.generated.h"
+#include <obs-module.h>
+#include <obs-frontend-api.h>
 
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent, Qt::Dialog),
-												  ui(new Ui::SettingsDialog)
+#include "../plugin-macros.generated.h"
+#include "../Config.hpp"
+
+SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent, Qt::Dialog), ui(new Ui::SettingsDialog)
 {
 	ui->setupUi(this);
 
-	connect(ui->buttonBox, &QDialogButtonBox::accepted,
-			this, &SettingsDialog::FormAccepted);
+	connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::FormAccepted);
 
 	auto monitoringType = ui->audioMonitoring;
 
 	// TODO: get translations
-	monitoringType->addItem("None",
-							(int)OBS_MONITORING_TYPE_NONE);
-	monitoringType->addItem("MonitorOnly",
-							(int)OBS_MONITORING_TYPE_MONITOR_ONLY);
-	monitoringType->addItem("Both",
-							(int)OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT);
+	monitoringType->addItem("None", (int)OBS_MONITORING_TYPE_NONE);
+	monitoringType->addItem("MonitorOnly", (int)OBS_MONITORING_TYPE_MONITOR_ONLY);
+	monitoringType->addItem("Both", (int)OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT);
 
 	auto volume = ui->volume;
 	volume->setMinimum(0);
@@ -32,12 +28,11 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent, Qt::Dialog),
 	volume->setSuffix("%");
 }
 
-void SettingsDialog::showEvent(QShowEvent *event)
+void SettingsDialog::showEvent(QShowEvent * /*event*/)
 {
 	auto conf = GetConfig();
 
-	if (conf)
-	{
+	if (conf) {
 		auto mt = conf->MonitoringType;
 		auto volume = conf->Volume;
 		blog(LOG_INFO, "Option from config %d", mt);
@@ -60,19 +55,19 @@ void SettingsDialog::ToggleShowHide()
 void SettingsDialog::FormAccepted()
 {
 	auto conf = GetConfig();
-	if (!conf)
-	{
+	if (!conf) {
 		return;
 	}
 
 	auto idx = ui->audioMonitoring->currentIndex();
-	obs_monitoring_type mt = (obs_monitoring_type)ui->audioMonitoring->itemData(idx).toInt();
 
 	auto volume = ui->volume->value();
 
 	conf->MonitoringType = idx;
-	conf->Volume = (int) volume;
+	conf->Volume = (int)volume;
+
 	blog(LOG_INFO, "Option from ui %d", idx);
+
 	conf->Save();
 }
 
